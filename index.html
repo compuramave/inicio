@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Compurama C.A. - Tu tienda de tecnología en Venezuela. Laptops, impresoras, routers y accesorios con financiamiento Cashea. Las mejores marcas: HP, Dell, Asus, Lenovo, Epson, Canon, Xerox, TP-Link, Mercusys.">
+  <meta name="keywords"
+    content="Compurama, laptops, impresoras, routers, tecnología, Venezuela, computadoras, HP, Dell, Asus, Lenovo, Epson, Cashea, financiamiento, TP-Link, Mercusys">
+  <title>Compurama C.A. | Servicio y Tecnología</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="media/favicon.png">
+</head>
+
+<body>
+
+  <!-- ===== SEARCH BAR ===== -->
+  <div class="search-bar">
+    <div class="container">
+      <input type="text" placeholder="Buscar laptops, impresoras, marcas..." id="search-input">
+      <button class="search-close">✕</button>
+    </div>
+  </div>
+
+  <!-- ===== GLOBAL LOADER ===== -->
+  <div id="loader" class="global-loader">
+    <div class="spinner"></div>
+    <p>Cargando inventario actualizado...</p>
+  </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="nav-logo">
+        <img src="media/logo.png" alt="Compurama Logo">
+        <span class="brand-name font-primary">COMPURAMA</span>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#inicio" class="active">Inicio</a>
+        <a href="#categorias">Categorías</a>
+        <a href="#laptops">Laptops</a>
+        <a href="#impresoras">Impresoras</a>
+        <a href="#routers">Routers</a>
+        <a href="#tablets">Tablets</a>
+        <a href="#cashea">Cashea</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="nav-actions">
+        <button class="search-toggle" title="Buscar">🔍</button>
+        <button class="cart-toggle" title="Carrito">
+          🛒
+          <span class="cart-count">0</span>
+        </button>
+        <button class="mobile-toggle" aria-label="Menú">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>⚡</span> <span class="font-secondary" style="font-size:0.7rem; margin-right:4px;">COMPURAMA</span>
+          </div>
+          <h1>
+            <span class="font-primary"
+              style="color: var(--cyan); display: block; font-size: 1rem; letter-spacing: 5px; margin-bottom: 10px;">COMPURAMA
+              C.A.</span>
+            Tu aliado en
+            <span class="gradient-text">tecnología</span>
+            de confianza
+          </h1>
+          <p>
+            Encuentra las mejores laptops, impresoras y equipos tecnológicos con garantía,
+            asesoría personalizada y financiamiento disponible a través de Cashea.
+          </p>
+          <div class="hero-buttons">
+            <a href="#laptops" class="btn btn-primary">
+              💻 Ver Catálogo
+            </a>
+            <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20conocer%20sus%20productos"
+              target="_blank" class="btn btn-outline">
+              📱 WhatsApp
+            </a>
+            <div class="cashea-hero-badge">
+              <img src="media/cashea logo.jpg" alt="Cashea">
+              <span>Paga en cuotas</span>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number">21+</div>
+              <div class="stat-label">Años de experiencia</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">Miles</div>
+              <div class="stat-label">Clientes satisfechos</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">700+</div>
+              <div class="stat-label">Productos en catálogo</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="media/compuraman mascota fondo blanco.png" alt="Compuramán - Mascota de Compurama">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BRAND PARTNERS ===== -->
+  <section class="brand-partners reveal">
+    <div class="container">
+      <div class="partners-flex">
+        <img src="media/hp logo.png" alt="HP" title="HP Partner">
+        <img src="media/intel logo.png" alt="Intel" title="Intel Technology">
+        <img src="media/amd logo.png" alt="AMD" title="AMD Partner">
+        <img src="media/Mastercard-logo.svg.png" alt="Mastercard" title="Pagos con Mastercard">
+        <img src="media/cashea logo.jpg" alt="Cashea" title="Financiamiento con Cashea">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BESTSELLERS CAROUSEL ===== -->
+  <section class="bestsellers" id="destacados">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">⭐ Lo Más Vendido</div>
+        <h2>Productos Destacados</h2>
+        <p>Los equipos favoritos de la semana</p>
+      </div>
+      <div class="carousel-container reveal">
+        <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" id="bestsellers-track">
+            <!-- Products injected by JS -->
+          </div>
+        </div>
+        <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CATEGORIES ===== -->
+  <section class="categories" id="categorias">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">📂 Categorías</div>
+        <h2>Explora nuestras categorías</h2>
+        <p>Todo lo que necesitas en tecnología, en un solo lugar</p>
+      </div>
+      <div class="categories-grid">
+        <div class="category-card reveal" onclick="scrollToSection('laptops')">
+          <div class="category-icon">💻</div>
+          <h3>Laptops</h3>
+          <p>HP, Dell, Asus, Lenovo y más</p>
+        </div>
+        <div class="category-card reveal" onclick="scrollToSection('impresoras')">
+          <div class="category-icon">🖨️</div>
+          <h3>Impresoras</h3>
+          <p>Epson, HP, Canon, Xerox</p>
+        </div>
+        <div class="category-card reveal" onclick="scrollToSection('routers')">
+          <div class="category-icon">📡</div>
+          <h3>Routers</h3>
+          <p>TP-Link, Mercusys</p>
+        </div>
+        <div class="category-card reveal" onclick="scrollToSection('tablets')">
+          <div class="category-icon">📱</div>
+          <h3>Tablets</h3>
+          <p>Apple, Lenovo, Samsung</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LAPTOPS ===== -->
+  <section class="products" id="laptops">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">💻 Laptops</div>
+        <h2>Nuestras Laptops</h2>
+        <p>Las mejores marcas con garantía y soporte técnico</p>
+      </div>
+      <div class="products-toolbar reveal">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="hp">HP</button>
+          <button class="filter-btn" data-filter="dell">Dell</button>
+          <button class="filter-btn" data-filter="asus">Asus</button>
+          <button class="filter-btn" data-filter="lenovo">Lenovo</button>
+          <button class="filter-btn" data-filter="nexxus">Nexxus</button>
+        </div>
+      </div>
+      <div class="products-grid" data-section="laptops"></div>
+    </div>
+  </section>
+
+  <!-- ===== PRINTERS ===== -->
+  <section class="products products-dark" id="impresoras">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">🖨️ Impresoras</div>
+        <h2>Impresoras y Multifuncionales</h2>
+        <p>Soluciones de impresión para el hogar y la oficina</p>
+      </div>
+      <div class="products-toolbar reveal">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="epson">Epson</button>
+          <button class="filter-btn" data-filter="hp">HP</button>
+          <button class="filter-btn" data-filter="canon">Canon</button>
+          <button class="filter-btn" data-filter="xerox">Xerox</button>
+        </div>
+      </div>
+      <div class="products-grid" data-section="impresoras"></div>
+    </div>
+  </section>
+
+  <!-- ===== ROUTERS ===== -->
+  <section class="products" id="routers">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">📡 Routers</div>
+        <h2>Routers y Conectividad</h2>
+        <p>Lleva tu conexión al siguiente nivel con routers de alto rendimiento</p>
+      </div>
+      <div class="products-toolbar reveal">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="mercusys">Mercusys</button>
+          <button class="filter-btn" data-filter="tp-link">TP-Link</button>
+        </div>
+      </div>
+      <div class="products-grid" data-section="routers"></div>
+    </div>
+  </section>
+
+  <!-- ===== TABLETS ===== -->
+  <section class="products products-dark" id="tablets">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">📱 Tablets</div>
+        <h2>Tablets y iPads</h2>
+        <p>Potencia y portabilidad en tus manos</p>
+      </div>
+      <div class="products-toolbar reveal">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="chuwi">Chuwi</button>
+          <button class="filter-btn" data-filter="dialn">Dialn</button>
+          <button class="filter-btn" data-filter="apple">Apple</button>
+        </div>
+      </div>
+      <div class="products-grid" data-section="tablets"></div>
+    </div>
+  </section>
+
+  <!-- ===== CASHEA SECTION ===== -->
+  <section class="cashea-section" id="cashea">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag cashea-tag">💳 Financiamiento</div>
+        <h2>Compra ahora, paga después con <span class="gradient-text-cashea">Cashea</span></h2>
+        <p>Somos <strong>aliados oficiales de Cashea</strong>. Lleva tu tecnología hoy y págala en cómodas cuotas sin
+          intereses.</p>
+      </div>
+
+      <div class="cashea-partner-badge reveal">
+        <img src="media/cashea logo.jpg" alt="Cashea Logo">
+        <div>
+          <h3>✅ Aliado Oficial Cashea</h3>
+          <p>Compurama C.A. es una tienda verificada y autorizada por Cashea</p>
+        </div>
+      </div>
+
+      <div class="cashea-how-grid">
+        <div class="cashea-step reveal">
+          <div class="cashea-step-number">1</div>
+          <div class="cashea-step-icon">📱</div>
+          <h3>Descarga la App</h3>
+          <p>Descarga Cashea desde tu tienda de aplicaciones, regístrate con tu cédula venezolana y verifica tu
+            identidad.</p>
+        </div>
+        <div class="cashea-step reveal">
+          <div class="cashea-step-number">2</div>
+          <div class="cashea-step-icon">🛍️</div>
+          <h3>Elige tu Producto</h3>
+          <p>Selecciona el producto que deseas en Compurama. Cualquier laptop, impresora, router o accesorio disponible.
+          </p>
+        </div>
+        <div class="cashea-step reveal">
+          <div class="cashea-step-number">3</div>
+          <div class="cashea-step-icon">💵</div>
+          <h3>Paga una Inicial</h3>
+          <p>Paga entre el 40% y 60% del valor como cuota inicial. Tú eliges el porcentaje que mejor se adapte a ti.</p>
+        </div>
+        <div class="cashea-step reveal">
+          <div class="cashea-step-number">4</div>
+          <div class="cashea-step-icon">📅</div>
+          <h3>Cuotas Quincenales</h3>
+          <p>El resto se divide en 3 cuotas quincenales (cada 14 días) <strong>sin intereses</strong>. Paga en bolívares
+            al cambio BCV del día.</p>
+        </div>
+      </div>
+
+      <div class="cashea-features reveal">
+        <div class="cashea-feature">
+          <span class="cashea-feature-icon">🚫</span>
+          <h4>Sin Intereses</h4>
+          <p>0% de interés en todas tus compras si pagas a tiempo</p>
+        </div>
+        <div class="cashea-feature">
+          <span class="cashea-feature-icon">🏦</span>
+          <h4>Pago en Bolívares</h4>
+          <p>Cuotas en USD, pago en Bs al cambio BCV del día via Pago Móvil</p>
+        </div>
+        <div class="cashea-feature">
+          <span class="cashea-feature-icon">⚡</span>
+          <h4>Aprobación Rápida</h4>
+          <p>Línea de crédito asignada al momento de registrarte en la app</p>
+        </div>
+        <div class="cashea-feature">
+          <span class="cashea-feature-icon">🔒</span>
+          <h4>100% Seguro</h4>
+          <p>Plataforma fintech venezolana regulada y confiable</p>
+        </div>
+      </div>
+
+      <div class="cashea-cta reveal">
+        <p>¿Listo para estrenar tu equipo? Contáctanos y financia con Cashea 🚀</p>
+        <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20comprar%20con%20Cashea"
+          target="_blank" class="btn btn-primary">
+          📱 Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="about" id="nosotros">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image reveal">
+          <img src="media/compuraman mascota fondo blanco.png" alt="Compuramán">
+        </div>
+        <div class="about-content reveal">
+          <div class="section-tag">🏢 Sobre Nosotros</div>
+          <h2>Somos <span class="gradient-text font-primary"
+              style="text-transform:uppercase; font-size: 2.5rem;">COMPURAMA</span></h2>
+          <p>
+            Con más de <strong>21 años de trayectoria</strong> en el mercado tecnológico, Compurama C.A. es tu tienda de
+            confianza ubicada en <strong>Barinas, Venezuela</strong>.
+          </p>
+          <p>
+            Nos especializamos en venta de laptops (nuevas y reacondicionadas certificadas), equipos All-in-One, Mini
+            PCs, monitores, pantallas 4K y accesorios de alta gama. Además, ofrecemos <strong>servicio técnico
+              especializado</strong> y opciones de financiamiento fáciles de pagar en bolívares o divisas.
+          </p>
+          <div class="about-features">
+            <div class="feature-item">
+              <div class="feature-icon">✅</div>
+              <div>
+                <h4>Garantía</h4>
+                <p>Todos los productos con garantía</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🚚</div>
+              <div>
+                <h4>Envíos</h4>
+                <p>Entrega a todo el país</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">💳</div>
+              <div>
+                <h4>Financiamiento</h4>
+                <p>Paga en cuotas con Cashea</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🛠️</div>
+              <div>
+                <h4>Soporte</h4>
+                <p>Asesoría técnica especializada</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="contact" id="contacto">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">📞 Contacto</div>
+        <h2>¿Listo para comprar?</h2>
+        <p>Contáctanos por cualquiera de nuestros canales</p>
+      </div>
+      <div class="contact-grid">
+        <a href="https://wa.me/584245339698?text=Hola%20Compurama!" target="_blank" class="contact-card reveal">
+          <div class="contact-card-icon">📱</div>
+          <h3>WhatsApp</h3>
+          <p>0424-5339698</p>
+          <br><span style="color:var(--cyan-light);font-weight:600;">Escríbenos ahora →</span>
+        </a>
+        <a href="https://instagram.com/compuramave" target="_blank" class="contact-card reveal">
+          <div class="contact-card-icon">📸</div>
+          <h3>Instagram</h3>
+          <p>@COMPURAMAVE</p>
+          <br><span style="color:var(--cyan-light);font-weight:600;">Síguenos →</span>
+        </a>
+        <div class="contact-card reveal">
+          <div class="contact-card-icon">🏪</div>
+          <h3>Tienda Física</h3>
+          <p>Barinas, Venezuela</p>
+          <br><span style="color:var(--cyan-light);font-weight:600;">RIF: J-309735160</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-box">
+            <img src="media/logo.png" alt="Compurama">
+            <span class="brand-name font-primary" style="font-size: 1.5rem; color: #fff;">COMPURAMA</span>
+          </div>
+          <p>Compurama C.A. — <span class="font-secondary" style="font-size:0.75rem;">Servicio y Tecnología</span>.
+            Barinas, Venezuela.<br>Más de 21 años brindando equipos y soporte técnico de calidad.</p>
+          <div class="footer-social">
+            <a href="https://instagram.com/compuramave" target="_blank" title="Instagram">📸</a>
+            <a href="https://wa.me/584245339698" target="_blank" title="WhatsApp">📱</a>
+            <img src="media/cashea logo.jpg" alt="Cashea" class="footer-cashea">
+          </div>
+        </div>
+        <div>
+          <h4>Productos</h4>
+          <ul>
+            <li><a href="#laptops">Laptops</a></li>
+            <li><a href="#impresoras">Impresoras</a></li>
+            <li><a href="#routers">Routers</a></li>
+            <li><a href="#cashea">Cashea</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Marcas</h4>
+          <ul>
+            <li><a href="#">HP / Dell</a></li>
+            <li><a href="#">Asus / Lenovo</a></li>
+            <li><a href="#">Intel / AMD</a></li>
+            <li><a href="#">Epson / Canon</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="https://wa.me/584245339698" target="_blank">📱 0424-5339698</a></li>
+            <li><a href="https://instagram.com/compuramave" target="_blank">📸 @COMPURAMAVE</a></li>
+            <li><a href="#">🏢 RIF: J-309735160</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Compurama C.A. Todos los derechos reservados.</p>
+        <p><span class="font-secondary" style="font-size:0.7rem;">Servicio y Tecnología</span> 🇻🇪</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== CART SIDEBAR ===== -->
+  <div class="cart-overlay"></div>
+  <div class="cart-sidebar">
+    <div class="cart-header">
+      <h2>🛒 Mi Carrito</h2>
+      <button class="cart-close">✕</button>
+    </div>
+    <div class="cart-items">
+      <div class="cart-empty">
+        <span>🛒</span>
+        <h3>Tu carrito está vacío</h3>
+        <p>¡Explora nuestros productos y encuentra lo que necesitas!</p>
+      </div>
+    </div>
+    <div class="cart-footer" style="display:none;">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span>$0.00</span>
+      </div>
+      <button class="btn-checkout" onclick="checkout()">
+        📱 Pedir por WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCT MODAL ===== -->
+  <div class="modal-overlay">
+    <div class="product-modal"></div>
+  </div>
+
+  <!-- ===== WHATSAPP FLOAT ===== -->
+  <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20un%20producto" target="_blank"
+    class="whatsapp-float" title="Contáctanos por WhatsApp">
+    💬
+  </a>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
