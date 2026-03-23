@@ -9,34 +9,21 @@ Cada vez que hagas cambios en tu sitio web y quieras actualizar la página en Gi
 // turbo-all
 
 ## 1. Agregar todos los archivos modificados
-```
-git add .
+```powershell
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User"); git add .
 ```
 
 ## 2. Crear un commit con un mensaje describiendo el cambio
-```
-git commit -m "descripción del cambio"
+```powershell
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User"); git commit -m "descripción del cambio"
 ```
 Reemplaza "descripción del cambio" con lo que cambiaste, ejemplo: `git commit -m "corregir stock no disponible"`
 
 ## 3. Subir los cambios a GitHub
-```
-git push
+```powershell
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User"); git push
 ```
 
 ¡Eso es todo! En unos segundos tu página en GitHub Pages se actualizará automáticamente.
 
----
-
-## Primera vez (configuración inicial)
-
-Si es la primera vez que configuras el repositorio, necesitas ejecutar estos comandos primero:
-
-```
-git init
-git remote add origin https://github.com/TU-USUARIO/TU-REPOSITORIO.git
-git branch -M main
-git add .
-git commit -m "primer commit"
-git push -u origin main
-```
+> **Nota:** El prefijo `$env:Path = ...` es necesario porque PowerShell a veces no detecta Git sin refrescar la variable PATH.
