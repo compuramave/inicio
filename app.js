@@ -86,13 +86,13 @@ async function loadProductsFromSheet() {
       let category = 'laptops';
       const isRefurbished = titleLower.includes('refurbished') || titleLower.includes('reacondicionad') || titleLower.includes('refurb');
       
-      if (titleLower.startsWith('pc ') || titleLower === 'pc' || titleLower.includes('escritorio') || titleLower.includes('all in one') || titleLower.includes('desktop')) {
+      if (titleLower.startsWith('pc ') || titleLower === 'pc' || titleLower.includes('escritorio') || titleLower.includes('all in one') || titleLower.includes('desktop') || titleLower.includes('gamer')) {
         category = 'pc';
       } else if (isRefurbished) {
         category = 'refurbished';
       } else if (titleLower.includes('impresora') || titleLower.includes('ecotank') || titleLower.includes('laser') || titleLower.includes('canon') || titleLower.includes('xerox') || titleLower.includes('deskjet')) {
         category = 'impresoras';
-      } else if (titleLower.includes('router') || titleLower.includes('deco') || titleLower.includes('wi-fi') || titleLower.includes('ax12') || titleLower.includes('ax3000') || titleLower.includes('ac10')) {
+      } else if (titleLower.includes('router') || titleLower.includes('deco') || titleLower.includes('wi-fi') || titleLower.includes('ax12') || titleLower.includes('ax3000') || titleLower.includes('ac10') || titleLower.includes('ac12') || titleLower.includes('mercusys')) {
         category = 'routers';
       } else if (titleLower.includes('tablet') || titleLower.includes('ipad') || titleLower.includes('tab') || titleLower.includes('matepad') || titleLower.includes('aupad')) {
         category = 'tablets';
@@ -101,6 +101,7 @@ async function loadProductsFromSheet() {
       function getLocalImage(t, cat) {
         if (cat === 'routers') {
           if (t.includes('ac10')) return 'catalogo/routers/AC10.jpg';
+          if (t.includes('ac12') || t.includes('mercusys')) return 'catalogo/routers/AC12 AC1200.jpg';
           if (t.includes('ax12')) return 'catalogo/routers/AX12.jpg';
           if (t.includes('ax3000')) return 'catalogo/routers/AX3000.jpg';
         } else if (cat === 'tablets') {
@@ -118,6 +119,7 @@ async function loadProductsFromSheet() {
           if (t.includes('z240')) return 'catalogo/pc/HP REFURBISHED Z240.jpg';
           if (t.includes('7010')) return 'catalogo/pc/Dell Refurbished Optiplex 7010.jpg';
           if (t.includes('astron')) return 'catalogo/pc/PC NUEVA ASTRON.jpg';
+          if (t.includes('gamer') || t.includes('ryzen 5') || t.includes('rx 470') || t.includes('rx 570')) return 'catalogo/pc/PC RYZEN 5 2600 RX 570.jpg';
         } else if (cat === 'refurbished') {
           if (t.includes('5400')) return 'catalogo/laptops/dell 5400 i5 8th refurbiched.jpg';
           if (t.includes('dell') && (t.includes('4ta') || t.includes('4th'))) return 'catalogo/laptops/dell i5 4ta 8 128 refurbished.jpg';
@@ -204,7 +206,15 @@ async function loadProductsFromSheet() {
           return 'Tablet de alto rendimiento con pantalla de gran nitidez, ideal para el trabajo y el entretenimiento en cualquier lugar.';
         }
         if (cat === 'pc') {
+          if (t.includes('gamer') || t.includes('rx 470') || t.includes('rx 570')) return 'PC Gamer con procesador AMD Ryzen 5 2600, tarjeta gráfica RX 470, 8GB RAM, 256GB M.2 SSD. Fuente de poder Thermaltake 80+ certificada. Ideal para gaming y tareas exigentes.';
           return 'Potente computadora de escritorio diseñada para máximo rendimiento en tu hogar u oficina.';
+        }
+        if (cat === 'routers') {
+          if (t.includes('ac12') || t.includes('mercusys')) return 'Router Mercusys AC12 AC1200: Router WiFi de doble banda con velocidades de hasta 1200 Mbps. Banda 5GHz (867 Mbps) y 2.4GHz (300 Mbps). 4 antenas de alta ganancia para amplia cobertura. Ideal para streaming, gaming y múltiples dispositivos.';
+          if (t.includes('ac10')) return 'Router TP-Link AC10 con WiFi de doble banda AC1200. Velocidades de hasta 1200 Mbps combinadas para una conexión estable y rápida.';
+          if (t.includes('ax12')) return 'Router WiFi 6 AX12 de última generación. Velocidades ultrarrápidas y mayor capacidad para múltiples dispositivos conectados simultáneamente.';
+          if (t.includes('ax3000')) return 'Router WiFi 6 AX3000: Velocidades de hasta 3000 Mbps combinadas. Tecnología MU-MIMO y OFDMA para conexiones eficientes con múltiples dispositivos.';
+          return rowDesc || 'Router de alto rendimiento para una conexión WiFi rápida y estable en todo tu hogar.';
         }
         return rowDesc || '';
       }
