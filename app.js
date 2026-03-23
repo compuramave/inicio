@@ -100,10 +100,10 @@ async function loadProductsFromSheet() {
 
       function getLocalImage(t, cat) {
         if (cat === 'routers') {
-          if (t.includes('ac10')) return 'catalogo/routers/AC10.jpg';
-          if (t.includes('ac12') || t.includes('mercusys')) return 'catalogo/routers/AC12 AC1200.jpg';
-          if (t.includes('ax12')) return 'catalogo/routers/AX12.jpg';
           if (t.includes('ax3000')) return 'catalogo/routers/AX3000.jpg';
+          if (t.includes('ax12')) return 'catalogo/routers/AX12.jpg';
+          if (t.includes('ac10') && !t.includes('ac12')) return 'catalogo/routers/AC10.jpg';
+          if (t.includes('ac12') || t.includes('mercusys')) return 'catalogo/routers/AC12 AC1200.jpg';
         } else if (cat === 'tablets') {
           if (t.includes('hi10 xpro')) return 'catalogo/tablets/Tablet-CHUWI-Hi10-XPro-10_1_.jpg';
           if (t.includes('aupad')) return 'catalogo/tablets/chuwi aupad.jpg';
