@@ -226,7 +226,7 @@ async function loadProductsFromSheet() {
         description: getDesc(titleLower, row[2], category),
         stock: parseInt(row[3] || '0', 10),
         brand: getBrand(titleLower, row[4]),
-        image: (row[5] && row[5].trim().startsWith('http')) ? row[5].trim() : localImagePath,
+        image: (row[5] && row[5].trim().startsWith('http') && !row[5].includes('imgur.com/a/')) ? row[5].trim() : localImagePath,
         localImage: localImagePath,
         price: priceVal,
         category: category,
