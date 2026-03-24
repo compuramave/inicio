@@ -100,8 +100,16 @@ async function loadProductsFromSheet() {
         category = 'ups';
       } else if (titleLower.includes('monitor') || titleLower.includes('spidertec') || titleLower.includes('xiaomi') || titleLower.includes('pantalla')) {
         category = 'monitores';
-      } else if (titleLower.includes('microfono') || titleLower.includes('tx x2') || titleLower.includes('solapa')) {
+      } else if (titleLower.includes('microfono') || titleLower.includes('tx x2') || titleLower.includes('solapa') || titleLower.includes('roku') || titleLower.includes('fire tv') || titleLower.includes('dualshock') || titleLower.includes('ps4') || titleLower.includes('microsd') || titleLower.includes('micro sd') || titleLower.includes('ssd') || titleLower.includes('kingston') || titleLower.includes('dahua')) {
         category = 'accesorios';
+      } else if (titleLower.includes('audifono') || titleLower.includes('headset') || titleLower.includes('corneta') || titleLower.includes('sonido') || titleLower.includes('gh513w')) {
+        category = 'audio';
+      } else if (titleLower.includes('mouse') || titleLower.includes('raton')) {
+        category = 'mouses';
+      } else if (titleLower.includes('teclado') || titleLower.includes('keyboard')) {
+        category = 'teclados';
+      } else if (titleLower.includes('proyector') || titleLower.includes('magcubic')) {
+        category = 'proyectores';
       }
 
       function getLocalImage(t, cat) {
@@ -130,6 +138,26 @@ async function loadProductsFromSheet() {
           if (t.includes('xiaomi')) return 'catalogo/monitores/monitor xiaomi 27 165hz fhd.jpg';
         } else if (cat === 'accesorios') {
           if (t.includes('microfono')) return 'catalogo/Accesorios/Microfono TX Solapa Iphone y tipo C inalambrico 2 microfonos.jpg';
+          if (t.includes('dualshock') || t.includes('ps4')) return 'catalogo/Accesorios/Dualshock 4.jpg';
+          if (t.includes('fire tv')) return 'catalogo/Accesorios/Fire tv stick 4k select.jpg';
+          if (t.includes('roku') && t.includes('stick')) return 'catalogo/Accesorios/Roku streaming stick hd.jpg';
+          if (t.includes('roku')) return 'catalogo/Accesorios/Roku Express HD.jpg';
+          if (t.includes('micro sd') || t.includes('kingston')) return 'catalogo/Accesorios/MICRO SD CARD 128GB KINGSTON.jpg';
+          if (t.includes('ssd') && t.includes('128')) return 'catalogo/Accesorios/ssd 128gb dahua.jpg';
+          if (t.includes('ssd') && t.includes('256')) return 'catalogo/Accesorios/ssd 256gb dahua.jpg';
+          if (t.includes('ssd') && t.includes('1tb')) return 'catalogo/Accesorios/ssd 1tb dahua.jpg';
+        } else if (cat === 'audio') {
+          if (t.includes('gh513w') || t.includes('xtrike')) return 'catalogo/audio/Audifonos Xtrike me GH513W.jpg';
+        } else if (cat === 'mouses') {
+          if (t.includes('gm217')) return 'catalogo/mouses/mouse gamer xtrikeme gm217.jpg';
+          if (t.includes('gm227')) return 'catalogo/mouses/mouse gamer xtrikeme gm227.jpg';
+          if (t.includes('gm316w')) return 'catalogo/mouses/mouse gamer xtrikeme gm316w.jpg';
+        } else if (cat === 'teclados') {
+          if (t.includes('k7010')) return 'catalogo/teclados/teclado delux k7010.jpg';
+          if (t.includes('gk-980')) return 'catalogo/teclados/teclado-xtrike-me-gaming-gk-980.jpg';
+          if (t.includes('kb309')) return 'catalogo/teclados/xtrike me kb309.jpg';
+        } else if (cat === 'proyectores') {
+          if (t.includes('hy300') || t.includes('magcubic')) return 'catalogo/proyectores/proyector magcubic hy300 pro 720p.jpg';
         } else if (cat === 'pc') {
           if (t.includes('z240')) return 'catalogo/pc/HP REFURBISHED Z240.jpg';
           if (t.includes('7010')) return 'catalogo/pc/Dell Refurbished Optiplex 7010.jpg';
@@ -245,7 +273,24 @@ async function loadProductsFromSheet() {
         }
         if (cat === 'accesorios') {
           if (t.includes('microfono')) return 'Set de 2 micrófonos de solapa inalámbricos TX. Compatibles con iPhone (Lightning) y dispositivos Tipo-C. Calidad de audio profesional, ideal para contenido en redes sociales y entrevistas.';
+          if (t.includes('dualshock')) return 'Control Dualshock 4 para PS4: Diseño ergonómico, panel táctil y sticks de alta precisión. Perfecto para una experiencia de juego inmersiva.';
+          if (t.includes('fire tv')) return 'Amazon Fire TV Stick 4K: Convierte tu TV en inteligente con acceso a miles de apps de streaming en resolución 4K Ultra HD.';
+          if (t.includes('roku')) return 'Dispositivo de streaming Roku: Acceso fácil a miles de canales gratuitos y de pago. Streaming de alta velocidad y configuración sencilla.';
+          if (t.includes('micro sd')) return 'Tarjeta Micro SD Kingston 128GB: Almacenamiento confiable y rápido para tu smartphone, cámara o tablet. Clase 10 UHS-I.';
+          if (t.includes('ssd')) return 'Disco de estado sólido (SSD) Dahua: Mejora drásticamente la velocidad de tu computadora. Arranque instantáneo y carga de archivos ultrarrápida.';
           return rowDesc || 'Accesorio tecnológico de alta calidad para complementar tu equipo.';
+        }
+        if (cat === 'audio') {
+          return 'Audífonos Gamer Xtrike Me: Sonido estéreo de alta calidad, micrófono omnidireccional y diseño ergonómico para largas sesiones de juego.';
+        }
+        if (cat === 'mouses') {
+          return 'Mouse Gamer Xtrike Me: Sensor óptico de alta precisión, DPI ajustable y diseño ergonómico con iluminación RGB.';
+        }
+        if (cat === 'teclados') {
+          return 'Teclado Gamer Xtrike Me: Teclas de alto rendimiento con respuesta táctil rápida y retroiluminación para gaming nocturno.';
+        }
+        if (cat === 'proyectores') {
+          return 'Proyector Inteligente Magcubic: Resolución nativa clara, alto brillo y conectividad versátil. Transforma cualquier pared en un cine en casa.';
         }
         return rowDesc || '';
       }
