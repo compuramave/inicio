@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://compuramave.github.io/inicio/sitemap.xml
