@@ -151,37 +151,58 @@
         <h2>Explora nuestras categorías</h2>
         <p>Todo lo que necesitas en tecnología, en un solo lugar</p>
       </div>
-      <div class="categories-grid categories-grid-6">
-        <div class="category-card reveal" onclick="scrollToSection('refurbished')">
-          <div class="category-icon category-icon-fire">🔥</div>
-          <h3>Refurbished</h3>
-          <p>¡Ofertas imperdibles!</p>
+      <div class="carousel-container reveal">
+        <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track">
+            <div class="category-card" onclick="scrollToSection('refurbished')">
+              <div class="category-icon category-icon-fire">🔥</div>
+              <h3>Refurbished</h3>
+              <p>¡Ofertas!</p>
+            </div>
+            <div class="category-card" onclick="scrollToSection('laptops')">
+              <div class="category-icon">💻</div>
+              <h3>Laptops</h3>
+              <p>HP, Dell, Asus</p>
+            </div>
+            <div class="category-card" onclick="scrollToSection('pc')">
+              <div class="category-icon">🖥️</div>
+              <h3>Computadoras</h3>
+              <p>Escritorio</p>
+            </div>
+            <div class="category-card" onclick="scrollToSection('impresoras')">
+              <div class="category-icon">🖨️</div>
+              <h3>Impresoras</h3>
+              <p>Epson, HP</p>
+            </div>
+            <div class="category-card" onclick="scrollToSection('routers')">
+              <div class="category-icon">📡</div>
+              <h3>Routers</h3>
+              <p>TP-Link, Mercusys</p>
+            </div>
+            <div class="category-card" onclick="scrollToSection('monitores')">
+              <div class="category-icon">🖥️</div>
+              <h3>Monitores</h3>
+              <p>Spidertec, Xiaomi</p>
+            </div>
+            <div class="category-card" onclick="scrollToSection('tablets')">
+              <div class="category-icon">📱</div>
+              <h3>Tablets</h3>
+              <p>Apple, Lenovo</p>
+            </div>
+            <div class="category-card" onclick="scrollToSection('ups')">
+              <div class="category-icon">🔋</div>
+              <h3>Mini UPS</h3>
+              <p>Respaldo</p>
+            </div>
+            <div class="category-card" onclick="scrollToSection('accesorios')">
+              <div class="category-icon">🎧</div>
+              <h3>Accesorios</h3>
+              <p>Audio y más</p>
+            </div>
+          </div>
         </div>
-        <div class="category-card reveal" onclick="scrollToSection('laptops')">
-          <div class="category-icon">💻</div>
-          <h3>Laptops</h3>
-          <p>HP, Dell, Asus, Lenovo y más</p>
-        </div>
-        <div class="category-card reveal" onclick="scrollToSection('pc')">
-          <div class="category-icon">🖥️</div>
-          <h3>Computadoras</h3>
-          <p>Equipos de escritorio</p>
-        </div>
-        <div class="category-card reveal" onclick="scrollToSection('impresoras')">
-          <div class="category-icon">🖨️</div>
-          <h3>Impresoras</h3>
-          <p>Epson, HP, Canon, Xerox</p>
-        </div>
-        <div class="category-card reveal" onclick="scrollToSection('routers')">
-          <div class="category-icon">📡</div>
-          <h3>Routers</h3>
-          <p>TP-Link, Mercusys</p>
-        </div>
-        <div class="category-card reveal" onclick="scrollToSection('tablets')">
-          <div class="category-icon">📱</div>
-          <h3>Tablets</h3>
-          <p>Apple, Lenovo, Samsung</p>
-        </div>
+        <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
       </div>
     </div>
   </section>
@@ -360,6 +381,78 @@
         <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
         <div class="carousel-track-wrapper">
           <div class="carousel-track" data-section="tablets"></div>
+        </div>
+        <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ===== MINI UPS ===== -->
+  <section class="products products-dark" id="ups">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">🔋 Mini UPS</div>
+        <h2>Sistemas de Respaldo</h2>
+        <p>Tu internet siempre encendido, incluso sin electricidad</p>
+      </div>
+      <div class="products-toolbar reveal">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="marsriva">Marsriva</button>
+        </div>
+      </div>
+      <div class="carousel-container reveal">
+        <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" data-section="ups"></div>
+        </div>
+        <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MONITORES ===== -->
+  <section class="products" id="monitores">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">🖥️ Monitores</div>
+        <h2>Monitores y Pantallas</h2>
+        <p>Amplía tu visión con la mejor resolución y tasa de refresco</p>
+      </div>
+      <div class="products-toolbar reveal">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="spidertec">Spidertec</button>
+          <button class="filter-btn" data-filter="xiaomi">Xiaomi</button>
+        </div>
+      </div>
+      <div class="carousel-container reveal">
+        <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" data-section="monitores"></div>
+        </div>
+        <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACCESORIOS ===== -->
+  <section class="products products-dark" id="accesorios">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">🎧 Accesorios</div>
+        <h2>Accesorios y Periféricos</h2>
+        <p>El complemento ideal para tu ecosistema tecnológico</p>
+      </div>
+      <div class="products-toolbar reveal">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+        </div>
+      </div>
+      <div class="carousel-container reveal">
+        <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" data-section="accesorios"></div>
         </div>
         <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
       </div>

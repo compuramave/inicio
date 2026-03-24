@@ -96,6 +96,12 @@ async function loadProductsFromSheet() {
         category = 'routers';
       } else if (titleLower.includes('tablet') || titleLower.includes('ipad') || titleLower.includes('tab') || titleLower.includes('matepad') || titleLower.includes('aupad')) {
         category = 'tablets';
+      } else if (titleLower.includes('mini ups') || titleLower.includes('ups') || titleLower.includes('kp2') || titleLower.includes('kp3')) {
+        category = 'ups';
+      } else if (titleLower.includes('monitor') || titleLower.includes('spidertec') || titleLower.includes('xiaomi') || titleLower.includes('pantalla')) {
+        category = 'monitores';
+      } else if (titleLower.includes('microfono') || titleLower.includes('tx x2') || titleLower.includes('solapa')) {
+        category = 'accesorios';
       }
 
       function getLocalImage(t, cat) {
@@ -115,6 +121,15 @@ async function loadProductsFromSheet() {
           if (t.includes('2875') || t.includes('deskjet')) return 'catalogo/impresoras/hp 2875.webp';
           if (t.includes('b235') || t.includes('xerox')) return 'catalogo/impresoras/xerox b235.webp';
           if (t.includes('mf264dw') || t.includes('canon')) return 'catalogo/impresoras/D_NQ_NP_713704-MLV54744864466_032023-O.webp';
+        } else if (cat === 'ups') {
+          if (t.includes('kp3')) return 'catalogo/UPS/mini ups marsriva kp3.jpg';
+          if (t.includes('kp2')) return 'catalogo/UPS/mini ups marssiva kp2 ec.jpg';
+        } else if (cat === 'monitores') {
+          if (t.includes('spidertec') && t.includes('19.5')) return 'catalogo/monitores/monitor spidertec 19.5.jpg';
+          if (t.includes('spidertec') && t.includes('21.5')) return 'catalogo/monitores/monitor spidertec 21.5.jpg';
+          if (t.includes('xiaomi')) return 'catalogo/monitores/monitor xiaomi 27 165hz fhd.jpg';
+        } else if (cat === 'accesorios') {
+          if (t.includes('microfono')) return 'catalogo/Accesorios/Microfono TX Solapa Iphone y tipo C inalambrico 2 microfonos.jpg';
         } else if (cat === 'pc') {
           if (t.includes('z240')) return 'catalogo/pc/HP REFURBISHED Z240.jpg';
           if (t.includes('7010')) return 'catalogo/pc/Dell Refurbished Optiplex 7010.jpg';
@@ -175,6 +190,7 @@ async function loadProductsFromSheet() {
         if (t.includes('canon')) return 'Canon';
         if (t.includes('tp-link')) return 'TP-Link';
         if (t.includes('mercusys')) return 'Mercusys';
+        if (t.includes('marsriva')) return 'Marsriva';
         if (t.includes('astron')) return 'Astron';
 
         return brand || 'Compurama';
@@ -205,6 +221,11 @@ async function loadProductsFromSheet() {
           if (t.includes('dialn g10')) return 'Tablet Dialn G10: Potente tablet de 10 pulgadas con conectividad avanzada. Perfecta para el día a día, redes sociales y aplicaciones educativas.';
           return 'Tablet de alto rendimiento con pantalla de gran nitidez, ideal para el trabajo y el entretenimiento en cualquier lugar.';
         }
+        if (cat === 'ups') {
+          if (t.includes('kp3')) return 'Mini UPS Marsriva KP3 de 10.000 mAh. Proporciona energía de respaldo ininterrumpida para routers, módems y cámaras de seguridad. Durabilidad teórica: hasta 8 horas de respaldo continuo para un router estándar (estimado según consumo promedio).';
+          if (t.includes('kp2')) return 'Mini UPS Marsriva KP2 EC de 8.000 mAh. Sistema de respaldo inteligente y compacto para dispositivos de red. Durabilidad teórica: entre 4 y 6 horas de energía ininterrumpida para un router estándar.';
+          return 'Mini UPS de alta eficiencia para mantener tu conexión a internet siempre activa durante fallas eléctricas.';
+        }
         if (cat === 'pc') {
           if (t.includes('gamer') || t.includes('rx 470') || t.includes('rx 570')) return 'PC Gamer con procesador AMD Ryzen 5 2600, tarjeta gráfica RX 470, 8GB RAM, 256GB M.2 SSD. Fuente de poder Thermaltake 80+ certificada. Ideal para gaming y tareas exigentes.';
           return 'Potente computadora de escritorio diseñada para máximo rendimiento en tu hogar u oficina.';
@@ -215,6 +236,16 @@ async function loadProductsFromSheet() {
           if (t.includes('ax12')) return 'Router WiFi 6 AX12 de última generación. Velocidades ultrarrápidas y mayor capacidad para múltiples dispositivos conectados simultáneamente.';
           if (t.includes('ax3000')) return 'Router WiFi 6 AX3000: Velocidades de hasta 3000 Mbps combinadas. Tecnología MU-MIMO y OFDMA para conexiones eficientes con múltiples dispositivos.';
           return rowDesc || 'Router de alto rendimiento para una conexión WiFi rápida y estable en todo tu hogar.';
+        }
+        if (cat === 'monitores') {
+          if (t.includes('spidertec') && t.includes('19.5')) return 'Monitor Spidertec de 19.5 pulgadas con entradas HDMI y VGA. Resolución clara y diseño compacto, ideal para oficina y tareas diarias.';
+          if (t.includes('spidertec') && t.includes('21.5')) return 'Monitor Spidertec de 21.5 pulgadas con entradas HDMI y VGA. Mayor espacio de visualización con nitidez excepcional para productividad y entretenimiento.';
+          if (t.includes('xiaomi')) return 'Monitor Xiaomi de 27 pulgadas, 165Hz de tasa de refresco y resolución FHD. Experiencia de juego ultra fluida con colores vibrantes y diseño minimalista sin bordes.';
+          return 'Monitor de alta resolución con excelente nitidez y colores vibrantes para trabajo o gaming.';
+        }
+        if (cat === 'accesorios') {
+          if (t.includes('microfono')) return 'Set de 2 micrófonos de solapa inalámbricos TX. Compatibles con iPhone (Lightning) y dispositivos Tipo-C. Calidad de audio profesional, ideal para contenido en redes sociales y entrevistas.';
+          return rowDesc || 'Accesorio tecnológico de alta calidad para complementar tu equipo.';
         }
         return rowDesc || '';
       }
