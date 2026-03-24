@@ -100,16 +100,16 @@ async function loadProductsFromSheet() {
         category = 'ups';
       } else if (titleLower.includes('monitor') || titleLower.includes('spidertec') || titleLower.includes('xiaomi') || titleLower.includes('pantalla')) {
         category = 'monitores';
-      } else if (titleLower.includes('microfono') || titleLower.includes('tx x2') || titleLower.includes('solapa') || titleLower.includes('roku') || titleLower.includes('fire tv') || titleLower.includes('dualshock') || titleLower.includes('ps4') || titleLower.includes('microsd') || titleLower.includes('micro sd') || titleLower.includes('ssd') || titleLower.includes('kingston') || titleLower.includes('dahua')) {
-        category = 'accesorios';
-      } else if (titleLower.includes('audifono') || titleLower.includes('headset') || titleLower.includes('corneta') || titleLower.includes('sonido') || titleLower.includes('gh513w')) {
+      } else if (titleLower.includes('audifono') || titleLower.includes('audifonos') || titleLower.includes('headset') || titleLower.includes('corneta') || titleLower.includes('sonido') || titleLower.includes('gh513') || titleLower.includes('gh-513')) {
         category = 'audio';
-      } else if (titleLower.includes('mouse') || titleLower.includes('raton')) {
+      } else if (titleLower.includes('mouse') || titleLower.includes('raton') || titleLower.includes('gm217') || titleLower.includes('gm227') || titleLower.includes('gm316') || titleLower.includes('gm-217') || titleLower.includes('gm-227') || titleLower.includes('gm-316')) {
         category = 'mouses';
-      } else if (titleLower.includes('teclado') || titleLower.includes('keyboard')) {
+      } else if (titleLower.includes('teclado') || titleLower.includes('keyboard') || titleLower.includes('gk-980') || titleLower.includes('gk980') || titleLower.includes('kb-309') || titleLower.includes('kb309') || titleLower.includes('k7010')) {
         category = 'teclados';
-      } else if (titleLower.includes('proyector') || titleLower.includes('magcubic')) {
+      } else if (titleLower.includes('proyector') || titleLower.includes('magcubic') || titleLower.includes('hy300') || titleLower.includes('hy-300')) {
         category = 'proyectores';
+      } else if (titleLower.includes('microfono') || titleLower.includes('tx x2') || titleLower.includes('solapa') || titleLower.includes('roku') || titleLower.includes('fire tv') || titleLower.includes('dualshock') || titleLower.includes('ps4') || titleLower.includes('microsd') || titleLower.includes('micro sd') || titleLower.includes('ssd') || titleLower.includes('kingston') || titleLower.includes('dahua') || titleLower.includes('control ps')) {
+        category = 'accesorios';
       }
 
       function getLocalImage(t, cat) {
@@ -153,11 +153,11 @@ async function loadProductsFromSheet() {
           if (t.includes('gm227')) return 'catalogo/mouses/mouse gamer xtrikeme gm227.jpg';
           if (t.includes('gm316w')) return 'catalogo/mouses/mouse gamer xtrikeme gm316w.jpg';
         } else if (cat === 'teclados') {
-          if (t.includes('k7010')) return 'catalogo/teclados/teclado delux k7010.jpg';
-          if (t.includes('gk-980')) return 'catalogo/teclados/teclado-xtrike-me-gaming-gk-980.jpg';
-          if (t.includes('kb309')) return 'catalogo/teclados/xtrike me kb309.jpg';
+          if (t.includes('k7010') || t.includes('delux')) return 'catalogo/teclados/teclado delux k7010.jpg';
+          if (t.includes('gk-980') || t.includes('gk980')) return 'catalogo/teclados/teclado-xtrike-me-gaming-gk-980.jpg';
+          if (t.includes('kb309') || t.includes('kb-309')) return 'catalogo/teclados/xtrike me kb309.jpg';
         } else if (cat === 'proyectores') {
-          if (t.includes('hy300') || t.includes('magcubic')) return 'catalogo/proyectores/proyector magcubic hy300 pro 720p.jpg';
+          if (t.includes('hy300') || t.includes('hy-300') || t.includes('magcubic')) return 'catalogo/proyectores/proyector magcubic hy300 pro 720p.jpg';
         } else if (cat === 'pc') {
           if (t.includes('z240')) return 'catalogo/pc/HP REFURBISHED Z240.jpg';
           if (t.includes('7010')) return 'catalogo/pc/Dell Refurbished Optiplex 7010.jpg';
@@ -220,6 +220,16 @@ async function loadProductsFromSheet() {
         if (t.includes('mercusys')) return 'Mercusys';
         if (t.includes('marsriva')) return 'Marsriva';
         if (t.includes('astron')) return 'Astron';
+        if (t.includes('xtrike')) return 'Xtrike Me';
+        if (t.includes('delux')) return 'Delux';
+        if (t.includes('dahua')) return 'Dahua';
+        if (t.includes('roku')) return 'Roku';
+        if (t.includes('fire tv') || t.includes('amazon')) return 'Amazon';
+        if (t.includes('kingston')) return 'Kingston';
+        if (t.includes('magcubic')) return 'Magcubic';
+        if (t.includes('dualshock') || t.includes('ps4') || t.includes('playstation')) return 'Sony';
+        if (t.includes('nexxus')) return 'Nexxus';
+        if (t.includes('xerox')) return 'Xerox';
 
         return brand || 'Compurama';
       }
