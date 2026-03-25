@@ -86,7 +86,8 @@ async function loadProductsFromSheet() {
       let category = 'laptops';
       const isRefurbished = titleLower.includes('refurbished') || titleLower.includes('reacondicionad') || titleLower.includes('refurb');
       
-      if (titleLower.startsWith('pc ') || titleLower === 'pc' || titleLower.includes('escritorio') || titleLower.includes('all in one') || titleLower.includes('desktop') || titleLower.includes('gamer')) {
+      const isPeripheral = titleLower.includes('mouse') || titleLower.includes('teclado') || titleLower.includes('keyboard') || titleLower.includes('audifono') || titleLower.includes('headset') || titleLower.includes('corneta');
+      if (titleLower.startsWith('pc ') || titleLower === 'pc' || titleLower.includes('escritorio') || titleLower.includes('all in one') || titleLower.includes('desktop') || (titleLower.includes('gamer') && !isPeripheral && (titleLower.includes('pc') || titleLower.includes('ryzen') || titleLower.includes('rx ') || titleLower.includes('cpu')))) {
         category = 'pc';
       } else if (isRefurbished) {
         category = 'refurbished';
