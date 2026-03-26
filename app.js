@@ -150,9 +150,9 @@ async function loadProductsFromSheet() {
         } else if (cat === 'audio') {
           if (t.includes('gh513w') || t.includes('xtrike')) return 'catalogo/audio/Audifonos Xtrike me GH513W.jpg';
         } else if (cat === 'mouses') {
-          if (t.includes('gm217')) return 'catalogo/mouses/mouse gamer xtrikeme gm217.jpg';
-          if (t.includes('gm227')) return 'catalogo/mouses/mouse gamer xtrikeme gm227.jpg';
-          if (t.includes('gm316w')) return 'catalogo/mouses/mouse gamer xtrikeme gm316w.jpg';
+          if (t.includes('gm217') || t.includes('gm-217')) return 'catalogo/mouses/mouse gamer xtrikeme gm217.jpg';
+          if (t.includes('gm227') || t.includes('gm-227')) return 'catalogo/mouses/mouse gamer xtrikeme gm227.jpg';
+          if (t.includes('gm316w') || t.includes('gm-316w') || t.includes('gm316')) return 'catalogo/mouses/mouse gamer xtrikeme gm316w.jpg';
         } else if (cat === 'teclados') {
           if (t.includes('k7010') || t.includes('delux')) return 'catalogo/teclados/teclado delux k7010.jpg';
           if (t.includes('gk-980') || t.includes('gk980')) return 'catalogo/teclados/teclado-xtrike-me-gaming-gk-980.jpg';
