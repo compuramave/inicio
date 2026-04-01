@@ -365,7 +365,33 @@ document.addEventListener('DOMContentLoaded', async () => {
       window.history.replaceState({}, document.title, window.location.pathname);
     }, 500);
   }
+
+  // Activar temporizador Flash
+  updateFlashTimer();
+  setInterval(updateFlashTimer, 1000);
 });
+
+// ===== FLASH TIMER =====
+function updateFlashTimer() {
+  const now = new Date();
+  const midnight = new Date();
+  midnight.setHours(24, 0, 0, 0);
+  const diff = midnight - now;
+
+  if (diff <= 0) return;
+
+  const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+  const elH = document.getElementById('cd-hours');
+  const elM = document.getElementById('cd-minutes');
+  const elS = document.getElementById('cd-seconds');
+
+  if (elH) elH.textContent = h.toString().padStart(2, '0');
+  if (elM) elM.textContent = m.toString().padStart(2, '0');
+  if (elS) elS.textContent = s.toString().padStart(2, '0');
+}
 
 // ===== RENDER PRODUCTS =====
 function renderProducts(filter) {
@@ -378,36 +404,7 @@ function renderProducts(filter) {
       return p.brand.toLowerCase() === filter.toLowerCase();
     });
 
-    grid.innerHTML = items.map(p => {
-      const outOfStock = p.stock <= 0;
-      return `
-      <div class="product-card reveal${outOfStock ? ' out-of-stock' : ''}" data-id="${p.id}">
-        ${outOfStock ? '<span class="product-badge badge-unavailable">⛔ No Disponible</span>' : 
-          (p.badge ? `<span class="product-badge badge-${p.badge}">${p.badge === 'new' ? '✨ Nuevo' : p.badge === 'sale' ? '🔥 Oferta' : '⭐ Top'}</span>` : '')}
-        <div class="product-image">
-          <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null; this.src='${p.localImage}';">
-          ${outOfStock ? '<div class="out-of-stock-overlay"><span>No Disponible</span></div>' : ''}
-          <div class="product-actions">
-            <button class="action-btn" onclick="openModal('${p.id}')" title="Ver detalle">👁</button>
-            ${!outOfStock ? `<button class="action-btn" onclick="addToCart('${p.id}')" title="Agregar al carrito">🛒</button>` : ''}
-            <button class="action-btn" onclick="shareProduct('${p.id}')" title="Compartir">🔗</button>
-          </div>
-        </div>
-        <div class="product-info">
-          <div class="product-brand">${p.brand}</div>
-          <h3>${p.name}</h3>
-          <div class="product-specs">
-            ${p.specs.map(s => `<span class="spec-tag">${s}</span>`).join('')}
-          </div>
-          <div class="product-footer">
-            <div class="product-price">$${p.price.toFixed(2)} <small>USD</small></div>
-            <button class="btn-add-cart${outOfStock ? ' btn-disabled' : ''}" onclick="${outOfStock ? '' : `addToCart('${p.id}')`}" ${outOfStock ? 'disabled' : ''}>
-              ${outOfStock ? '⛔ Agotado' : '🛒 Agregar'}
-            </button>
-          </div>
-        </div>
-      </div>
-    `}).join('');
+    grid.innerHTML = items.map(p => createProductCard(p)).join('');
 
     // Re-trigger reveal
     setupScrollReveal();
@@ -734,10 +731,33 @@ function setupSearch() {
 
 function createProductCard(p) {
   const outOfStock = p.stock <= 0;
+  
+  // Simulated PcComponentes Data
+  const idHash = p.name.length + (p.price * 10);
+  const rating = (4.5 + (idHash % 5) * 0.1).toFixed(1); 
+  const reviews = 15 + (idHash % 300);
+  
+  // Decide badge text dynamically for "sale" to make it more aggressive sometimes
+  let badgeHtml = '';
+  if (outOfStock) {
+    badgeHtml = '<span class="product-badge badge-unavailable">⛔ No Disponible</span>';
+  } else if (p.badge) {
+    if (p.badge === 'sale') {
+      const isExtreme = (idHash % 2 === 0);
+      badgeHtml = `<span class="product-badge ${isExtreme ? 'badge-history' : 'badge-trending'}">${isExtreme ? '¡Precio mínimo!' : '🔥 Trending'}</span>`;
+    } else {
+      badgeHtml = `<span class="product-badge badge-${p.badge}">${p.badge === 'new' ? '✨ Nuevo' : '⭐ Top'}</span>`;
+    }
+  }
+
+  // Simulate old price for refurbished / sale items
+  const hasDiscount = (p.category === 'refurbished' || p.badge === 'sale');
+  const discountMultiplier = 1.2 + ((idHash % 3) * 0.1); // 20% to 40%
+  const oldPrice = hasDiscount ? (p.price * discountMultiplier).toFixed(2) : null;
+
   return `
     <div class="product-card reveal visible${outOfStock ? ' out-of-stock' : ''}" data-id="${p.id}">
-      ${outOfStock ? '<span class="product-badge badge-unavailable">⛔ No Disponible</span>' :
-        (p.badge ? `<span class="product-badge badge-${p.badge}">${p.badge === 'new' ? '✨ Nuevo' : p.badge === 'sale' ? '🔥 Oferta' : '⭐ Top'}</span>` : '')}
+      ${badgeHtml}
       <div class="product-image">
         <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null; this.src='${p.localImage}';">
         ${outOfStock ? '<div class="out-of-stock-overlay"><span>No Disponible</span></div>' : ''}
@@ -750,11 +770,25 @@ function createProductCard(p) {
       <div class="product-info">
         <div class="product-brand">${p.brand}</div>
         <h3>${p.name}</h3>
+        
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-text">${rating}/5 (${reviews} opiniones)</span>
+        </div>
+        
         <div class="product-specs">
           ${p.specs.map(s => `<span class="spec-tag">${s}</span>`).join('')}
         </div>
+        
+        <div class="product-shipping">
+          <span class="shipping-icon">🚚</span> Envío a nivel nacional
+        </div>
+        
         <div class="product-footer">
-          <div class="product-price">$${p.price.toFixed(2)} <small>USD</small></div>
+          <div class="product-price">
+            $${p.price.toFixed(2)} <small>USD</small>
+            ${oldPrice ? `<span class="old-price">$${oldPrice}</span>` : ''}
+          </div>
           <button class="btn-add-cart${outOfStock ? ' btn-disabled' : ''}" onclick="${outOfStock ? '' : `addToCart('${p.id}')`}" ${outOfStock ? 'disabled' : ''}>
             ${outOfStock ? '⛔ Agotado' : '🛒 Agregar'}
           </button>
