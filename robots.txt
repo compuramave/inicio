@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /temp_sheet.csv
+Disallow: /server.ps1
+Disallow: /precios productos y catalogo cashea.xlsx
+
 Sitemap: https://compuramave.github.io/inicio/sitemap.xml

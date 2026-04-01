@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap');
 
+/* Performance note: font-display=swap is included in the URL above to prevent FOIT */
+
 :root {
   /* Branding Palette - Corporate Tech Modern */
   --primary: #061224;
@@ -649,6 +651,7 @@ ul {
   display: flex;
   transition: transform 0.5s ease-in-out;
   gap: 24px;
+  will-change: transform;
 }
 
 /* Reducimos el ancho de las tarjetas dentro del carrusel para móvil y web */
@@ -797,7 +800,7 @@ ul {
 .products-dark .product-card {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
+  /* Removed backdrop-filter: blur(10px) for GPU performance */
 }
 
 .product-badge {
@@ -2649,4 +2652,131 @@ ul {
   color: var(--danger);
   font-weight: 600;
   margin: 0;
+}
+
+/* ===== TRUST BAR ===== */
+.trust-bar {
+  background: var(--primary);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+  padding: 14px 0;
+  overflow: hidden;
+}
+
+.trust-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gray-300);
+  font-size: 0.88rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.trust-item:hover {
+  color: var(--cyan-light);
+}
+
+.trust-icon {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .trust-items {
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .trust-item {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .trust-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+    justify-items: center;
+  }
+
+  .trust-item {
+    font-size: 0.75rem;
+  }
+}
+
+/* ===== MOBILE STICKY CTA ===== */
+.mobile-sticky-cta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-sticky-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 998;
+    background: rgba(6, 18, 36, 0.97);
+    backdrop-filter: blur(10px);
+    padding: 10px 16px;
+    gap: 10px;
+    border-top: 1px solid rgba(0, 229, 255, 0.15);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .sticky-btn {
+    flex: 1;
+    text-align: center;
+    padding: 12px 16px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .sticky-btn-catalog {
+    background: var(--gradient-brand);
+    color: var(--white);
+    box-shadow: 0 2px 12px rgba(0, 102, 204, 0.4);
+  }
+
+  .sticky-btn-whatsapp {
+    background: #25d366;
+    color: var(--white);
+    box-shadow: 0 2px 12px rgba(37, 211, 102, 0.4);
+  }
+
+  .sticky-btn:active {
+    transform: scale(0.97);
+  }
+
+  /* Adjust WhatsApp float when sticky CTA is visible */
+  .whatsapp-float {
+    bottom: 80px;
+  }
+
+  /* Adjust toast position when sticky CTA is visible */
+  .toast {
+    bottom: 90px;
+  }
+
+  /* Add padding to body so content isn't hidden behind sticky CTA */
+  body {
+    padding-bottom: 70px;
+  }
 }
