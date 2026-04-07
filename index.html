@@ -334,6 +334,11 @@
               <span class="category-title">Accesorios</span>
               <p>Audio y más</p>
             </div>
+            <div class="category-card" onclick="scrollToSection('sillas')">
+              <div class="category-icon">🪑</div>
+              <span class="category-title">Sillas</span>
+              <p>Gamer y Oficina</p>
+            </div>
           </div>
         </div>
         <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
@@ -678,6 +683,24 @@
     </div>
   </section>
 
+  <!-- ===== SILLAS ===== -->
+  <section class="products" id="sillas">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">🪑 Sillas</div>
+        <h2>Sillas Gamer y Oficina</h2>
+        <p>Comodidad para tus largas jornadas</p>
+      </div>
+      <div class="carousel-container reveal">
+        <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" data-section="sillas"></div>
+        </div>
+        <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
+      </div>
+    </div>
+  </section>
+
   <section class="cashea-section" id="cashea">
     <div class="container">
       <div class="section-header reveal">
@@ -944,6 +967,39 @@
   <div class="mobile-sticky-cta">
     <a href="#laptops" class="sticky-btn sticky-btn-catalog">💻 Ver Catálogo</a>
     <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20un%20producto" target="_blank" class="sticky-btn sticky-btn-whatsapp">📱 WhatsApp</a>
+  </div>
+
+  <!-- ===== WEEKLY PROMO BUBBLE ===== -->
+  <div class="weekly-promo-bubble" id="promo-bubble">
+    <div class="promo-header">
+      <span class="promo-icon">🎁</span>
+      <div class="promo-info">
+        <h4>¡Súper Descuento Web!</h4>
+        <p>Hasta 10% de descuento solo esta semana</p>
+      </div>
+    </div>
+    <div class="promo-countdown" id="weekly-countdown">
+      <div class="cd-slot">
+        <span id="promo-days">00</span>
+        <small>Días</small>
+      </div>
+      <div class="cd-slot">
+        <span id="promo-hours">00</span>
+        <small>Horas</small>
+      </div>
+      <div class="cd-slot">
+        <span id="promo-mins">00</span>
+        <small>Min</small>
+      </div>
+      <div class="cd-slot">
+        <span id="promo-secs">00</span>
+        <small>Seg</small>
+      </div>
+    </div>
+    <div class="promo-footer">
+      <a href="#laptops" class="promo-btn">Aprovechar Ahora 🚀</a>
+    </div>
+    <button class="promo-close" onclick="document.getElementById('promo-bubble').style.display='none'">✕</button>
   </div>
 
   <script src="app.js" defer></script>

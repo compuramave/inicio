@@ -109,6 +109,8 @@ async function loadProductsFromSheet() {
         category = 'teclados';
       } else if (titleLower.includes('proyector') || titleLower.includes('magcubic') || titleLower.includes('hy300') || titleLower.includes('hy-300')) {
         category = 'proyectores';
+      } else if (titleLower.includes('silla') || titleLower.includes('chair') || titleLower.includes('gamer chair') || titleLower.includes('sillas')) {
+        category = 'sillas';
       } else if (titleLower.includes('microfono') || titleLower.includes('tx x2') || titleLower.includes('solapa') || titleLower.includes('roku') || titleLower.includes('fire tv') || titleLower.includes('dualshock') || titleLower.includes('ps4') || titleLower.includes('microsd') || titleLower.includes('micro sd') || titleLower.includes('ssd') || titleLower.includes('kingston') || titleLower.includes('dahua') || titleLower.includes('control ps')) {
         category = 'accesorios';
       }
@@ -159,6 +161,10 @@ async function loadProductsFromSheet() {
           if (t.includes('kb309') || t.includes('kb-309')) return 'catalogo/teclados/xtrike me kb309.jpg';
         } else if (cat === 'proyectores') {
           if (t.includes('hy300') || t.includes('hy-300') || t.includes('magcubic')) return 'catalogo/proyectores/proyector magcubic hy300 pro 720p.jpg';
+        } else if (cat === 'sillas') {
+          if (t.includes('asturias') || t.includes('arturia')) return 'catalogo/mobiliarios/ASTURIAS-NEGRA-430x382.jpg';
+          if (t.includes('madison')) return 'catalogo/mobiliarios/Silla-Ejecutiva-MADISON-N-1.jpg';
+          if (t.includes('trendy')) return 'catalogo/mobiliarios/silla ejecutiva trendy.jpg';
         } else if (cat === 'pc') {
           if (t.includes('z240')) return 'catalogo/pc/HP REFURBISHED Z240.jpg';
           if (t.includes('7010')) return 'catalogo/pc/Dell Refurbished Optiplex 7010.jpg';
@@ -303,6 +309,9 @@ async function loadProductsFromSheet() {
         if (cat === 'proyectores') {
           return 'Proyector Inteligente Magcubic: Resolución nativa clara, alto brillo y conectividad versátil. Transforma cualquier pared en un cine en casa.';
         }
+        if (cat === 'sillas') {
+          return rowDesc || 'Silla Gamer ergonómica de alta calidad, ideal para largas jornadas de juego o trabajo. Diseño cómodo y resistente.';
+        }
         return rowDesc || '';
       }
 
@@ -369,6 +378,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Activar temporizador Flash
   updateFlashTimer();
   setInterval(updateFlashTimer, 1000);
+
+  // Activar temporizador Promo Semanal (Hasta 11 de Abril 2026)
+  updateWeeklyPromoCountdown();
+  setInterval(updateWeeklyPromoCountdown, 1000);
 });
 
 // ===== FLASH TIMER =====
@@ -388,6 +401,34 @@ function updateFlashTimer() {
   const elM = document.getElementById('cd-minutes');
   const elS = document.getElementById('cd-seconds');
 
+  if (elH) elH.textContent = h.toString().padStart(2, '0');
+  if (elM) elM.textContent = m.toString().padStart(2, '0');
+  if (elS) elS.textContent = s.toString().padStart(2, '0');
+}
+
+// ===== WEEKLY PROMO TIMER =====
+function updateWeeklyPromoCountdown() {
+  const targetDate = new Date('April 11, 2026 23:59:59').getTime();
+  const now = new Date().getTime();
+  const diff = targetDate - now;
+
+  const bubble = document.getElementById('promo-bubble');
+  if (diff <= 0) {
+    if (bubble) bubble.style.display = 'none';
+    return;
+  }
+
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+  const elD = document.getElementById('promo-days');
+  const elH = document.getElementById('promo-hours');
+  const elM = document.getElementById('promo-mins');
+  const elS = document.getElementById('promo-secs');
+
+  if (elD) elD.textContent = d.toString().padStart(2, '0');
   if (elH) elH.textContent = h.toString().padStart(2, '0');
   if (elM) elM.textContent = m.toString().padStart(2, '0');
   if (elS) elS.textContent = s.toString().padStart(2, '0');
