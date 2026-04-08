@@ -117,9 +117,10 @@
 
   <!-- ===== SEARCH BAR ===== -->
   <div class="search-bar">
-    <div class="container">
+    <div class="container" style="position: relative;">
       <input type="text" placeholder="Buscar laptops, impresoras, marcas..." id="search-input">
       <button class="search-close">✕</button>
+      <div id="search-results" class="search-results"></div>
     </div>
   </div>
 
@@ -182,7 +183,7 @@
               💻 Ver Catálogo
             </a>
             <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20conocer%20sus%20productos"
-              target="_blank" class="btn btn-outline">
+              target="_blank" class="btn btn-outline" onclick="trackEvent('whatsapp_contact', { location: 'hero' })">
               📱 WhatsApp
             </a>
             <div class="cashea-hero-badge">
@@ -774,7 +775,7 @@
       <div class="cashea-cta reveal">
         <p>¿Listo para estrenar tu equipo? Contáctanos y financia con Cashea 🚀</p>
         <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20comprar%20con%20Cashea"
-          target="_blank" class="btn btn-primary">
+          target="_blank" class="btn btn-primary" onclick="trackEvent('cashea_click', { location: 'cashea_section' })">
           📱 Consultar por WhatsApp
         </a>
       </div>
@@ -845,13 +846,13 @@
         <p>Contáctanos por cualquiera de nuestros canales</p>
       </div>
       <div class="contact-grid">
-        <a href="https://wa.me/584245339698?text=Hola%20Compurama!" target="_blank" class="contact-card reveal">
+        <a href="https://wa.me/584245339698?text=Hola%20Compurama!" target="_blank" class="contact-card reveal" onclick="trackEvent('whatsapp_contact', { location: 'contact_section' })">
           <div class="contact-card-icon">📱</div>
           <h3>WhatsApp</h3>
           <p>0424-5339698</p>
           <br><span style="color:var(--cyan-light);font-weight:600;">Escríbenos ahora →</span>
         </a>
-        <a href="https://instagram.com/compuramave" target="_blank" class="contact-card reveal">
+        <a href="https://instagram.com/compuramave" target="_blank" class="contact-card reveal" onclick="trackEvent('social_click', { platform: 'instagram', location: 'contact_section' })">
           <div class="contact-card-icon">📸</div>
           <h3>Instagram</h3>
           <p>@COMPURAMAVE</p>
@@ -959,14 +960,14 @@
 
   <!-- ===== WHATSAPP FLOAT ===== -->
   <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20un%20producto" target="_blank"
-    class="whatsapp-float" title="Contáctanos por WhatsApp">
+    class="whatsapp-float" title="Contáctanos por WhatsApp" onclick="trackEvent('whatsapp_contact', { location: 'floating_button' })">
     💬
   </a>
 
   <!-- ===== MOBILE STICKY CTA ===== -->
   <div class="mobile-sticky-cta">
-    <a href="#laptops" class="sticky-btn sticky-btn-catalog">💻 Ver Catálogo</a>
-    <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20un%20producto" target="_blank" class="sticky-btn sticky-btn-whatsapp">📱 WhatsApp</a>
+    <a href="#laptops" class="sticky-btn sticky-btn-catalog" onclick="trackEvent('navigation_click', { section_id: 'laptops', location: 'sticky_cta' })">💻 Ver Catálogo</a>
+    <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20un%20producto" target="_blank" class="sticky-btn sticky-btn-whatsapp" onclick="trackEvent('whatsapp_contact', { location: 'sticky_cta' })">📱 WhatsApp</a>
   </div>
 
   <!-- ===== WEEKLY PROMO BUBBLE ===== -->
