@@ -390,7 +390,49 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Activar temporizador Promo Semanal (Hasta 11 de Abril 2026)
   updateWeeklyPromoCountdown();
   setInterval(updateWeeklyPromoCountdown, 1000);
+
+  // Escuchar cambios de hash para navegación directa
+  window.addEventListener('hashchange', () => {
+    const section = window.location.hash.replace('#', '');
+    if (section) trackSectionView(section);
+  });
 });
+
+// ===== VIRTUAL PAGE VIEW HELPER =====
+function trackSectionView(sectionId) {
+  const titles = {
+    'inicio': 'Inicio',
+    'categorias': 'Categorías',
+    'refurbished': 'Ofertas Refurbished',
+    'laptops': 'Catálogo de Laptops',
+    'pc': 'PCs de Escritorio',
+    'impresoras': 'Impresoras y Multifuncionales',
+    'routers': 'Routers y Conectividad',
+    'tablets': 'Tablets y iPads',
+    'ups': 'Sistemas de Respaldo',
+    'monitores': 'Monitores y Pantallas',
+    'accesorios': 'Accesorios y Periféricos',
+    'audio': 'Sonido y Audio',
+    'mouses': 'Mouses y Punteros',
+    'teclados': 'Teclados y Gamers',
+    'proyectores': 'Proyectores y Cine',
+    'sillas': 'Sillas Gamer y Oficina',
+    'cashea': 'Financiamiento Cashea',
+    'nosotros': 'Sobre Compurama',
+    'contacto': 'Contacto'
+  };
+
+  const sectionTitle = titles[sectionId] || sectionId;
+  const fullTitle = `Compurama | ${sectionTitle}`;
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'G-2EP0XH6XEY', {
+      'page_title': fullTitle,
+      'page_path': window.location.pathname + '#' + sectionId
+    });
+    console.log(`[GA4] Virtual Page View: ${fullTitle}`);
+  }
+}
 
 // ===== FLASH TIMER =====
 function updateFlashTimer() {
@@ -860,7 +902,8 @@ function performSearch(q) {
     return;
   }
 
-  trackEvent('search', { search_term: q });
+  // Track search, now including results check
+  // (We move the event call after filtering to count results)
 
   const filtered = products.filter(p =>
     p.name.toLowerCase().includes(q) ||
@@ -879,6 +922,12 @@ function performSearch(q) {
       firstFoundSection = section;
     }
     setupScrollReveal();
+  });
+
+  // Track: Search with results count
+  trackEvent('search', { 
+    search_term: q,
+    results_count: filtered.length
   });
 
   if (firstFoundSection) {
@@ -1123,7 +1172,10 @@ function scrollToSection(sectionId) {
   const el = document.getElementById(sectionId);
   if (el) el.scrollIntoView({ behavior: 'smooth' });
 
-  // Track: Navigation
+  // Track Virtual Page View
+  trackSectionView(sectionId);
+
+  // Track: Navigation Click
   trackEvent('navigation_click', {
     section_id: sectionId
   });
