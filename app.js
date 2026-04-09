@@ -978,7 +978,7 @@ function createProductCard(p) {
       </div>
       <div class="product-info">
         <div class="product-brand">${p.brand}</div>
-        <h3>${p.name}</h3>
+        <div class="product-title">${p.name}</div>
         
         <div class="product-rating">
           <span class="stars">★★★★★</span>

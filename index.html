@@ -12,6 +12,13 @@
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
   <title>Compurama C.A. | Laptops, Impresoras y Tecnología en Barinas</title>
+  <script>
+    // Enforce HTTPS
+    if (window.location.protocol === 'http:' && !window.location.hostname.includes('localhost')) {
+      window.location.href = window.location.href.replace('http:', 'https:');
+    }
+  </script>
+
   <meta name="description"
     content="Compurama C.A. - Tienda de tecnología en Barinas, Venezuela. Laptops, impresoras, routers y accesorios con garantía. Financiamiento con Cashea.">
   <meta name="keywords"
@@ -180,7 +187,7 @@
           </p>
           <div class="hero-buttons">
             <a href="#laptops" class="btn btn-primary">
-              💻 Ver Catálogo
+              💻 Ver Catálogo Completo
             </a>
             <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20conocer%20sus%20productos"
               target="_blank" class="btn btn-outline" onclick="trackEvent('whatsapp_contact', { location: 'hero' })">
@@ -1003,7 +1010,14 @@
     <button class="promo-close" onclick="document.getElementById('promo-bubble').style.display='none'">✕</button>
   </div>
 
-  <script src="app.js" defer></script>
+  <!-- ===== FLOATING SOCIAL SHARE ===== -->
+  <div class="social-share-floating">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://compuramave.github.io/inicio/" target="_blank" title="Compartir en Facebook" class="share-fb">FB</a>
+    <a href="https://wa.me/?text=Mira%20esta%20tienda%20de%20tecnología%20en%20Barinas:%20https://compuramave.github.io/inicio/" target="_blank" title="Compartir en WhatsApp" class="share-wa">WA</a>
+    <a href="https://twitter.com/intent/tweet?url=https://compuramave.github.io/inicio/&text=Compurama%20C.A.%20-%20Tu%20aliado%20en%20tecnología" target="_blank" title="Compartir en X" class="share-x">X</a>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 
 </html>

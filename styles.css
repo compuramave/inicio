@@ -928,7 +928,8 @@ ul {
   color: var(--cyan-light);
 }
 
-.product-info h3 {
+.product-title {
+  font-family: 'Outfit', sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
   margin-bottom: 8px;
@@ -937,9 +938,10 @@ ul {
   line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  line-height: 1.2;
 }
 
-.products-dark .product-info h3 {
+.products-dark .product-title {
   color: var(--white);
 }
 
@@ -3148,4 +3150,48 @@ ul {
     bottom: 80px;
     right: 24px;
   }
-}
+}
+/* ===== FLOATING SOCIAL SHARE ===== */
+.social-share-floating {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.social-share-floating a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+.social-share-floating a:hover {
+  transform: scale(1.1) translateX(-5px);
+}
+
+.share-fb { background: #1877f2; }
+.share-wa { background: #25d366; }
+.share-x { background: #000; }
+
+@media (max-width: 768px) {
+  .social-share-floating {
+    bottom: 20px;
+    top: auto;
+    right: 20px;
+    transform: none;
+    flex-direction: row;
+  }
+}
+
