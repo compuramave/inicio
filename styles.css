@@ -3183,7 +3183,7 @@ ul {
 
 .share-fb { background: #1877f2; }
 .share-wa { background: #25d366; }
-.share-x { background: #000; }
+.share-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
 
 @media (max-width: 768px) {
   .social-share-floating {
