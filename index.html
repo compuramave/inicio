@@ -99,6 +99,9 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="media/favicon.png">
   <link rel="apple-touch-icon" href="media/favicon.png">
+  
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Google Analytics (deferred for speed) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2EP0XH6XEY"></script>
@@ -854,19 +857,19 @@
       </div>
       <div class="contact-grid">
         <a href="https://wa.me/584245339698?text=Hola%20Compurama!" target="_blank" class="contact-card reveal" onclick="trackEvent('whatsapp_contact', { location: 'contact_section' })">
-          <div class="contact-card-icon">📱</div>
+          <div class="contact-card-icon"><i class="fab fa-whatsapp"></i></div>
           <h3>WhatsApp</h3>
           <p>0424-5339698</p>
           <br><span style="color:var(--cyan-light);font-weight:600;">Escríbenos ahora →</span>
         </a>
         <a href="https://instagram.com/compuramave" target="_blank" class="contact-card reveal" onclick="trackEvent('social_click', { platform: 'instagram', location: 'contact_section' })">
-          <div class="contact-card-icon">📸</div>
+          <div class="contact-card-icon"><i class="fab fa-instagram"></i></div>
           <h3>Instagram</h3>
           <p>@COMPURAMAVE</p>
           <br><span style="color:var(--cyan-light);font-weight:600;">Síguenos →</span>
         </a>
         <div class="contact-card reveal">
-          <div class="contact-card-icon">🏪</div>
+          <div class="contact-card-icon"><i class="fas fa-store"></i></div>
           <h3>Tienda Física</h3>
           <p>Barinas, Venezuela</p>
           <br><span style="color:var(--cyan-light);font-weight:600;">RIF: J-309735160</span>
@@ -887,9 +890,9 @@
           <p>Compurama C.A. — <span class="font-secondary" style="font-size:0.75rem;">Servicio y Tecnología</span>.
             Barinas, Venezuela.<br>Más de 23 años brindando equipos y soporte técnico de calidad.</p>
           <div class="footer-social">
-            <a href="https://www.facebook.com/profile.php?id=61551884969800" target="_blank" title="Facebook">📘</a>
-            <a href="https://instagram.com/compuramave" target="_blank" title="Instagram">📸</a>
-            <a href="https://wa.me/584245339698" target="_blank" title="WhatsApp">📱</a>
+            <a href="https://www.facebook.com/profile.php?id=61551884969800" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com/compuramave" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/584245339698" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             <img src="media/cashea logo.jpg" alt="Cashea" class="footer-cashea">
           </div>
         </div>
@@ -915,9 +918,9 @@
         <div>
           <h4>Contacto</h4>
           <ul>
-            <li><a href="https://wa.me/584245339698" target="_blank">📱 0424-5339698</a></li>
-            <li><a href="https://instagram.com/compuramave" target="_blank">📸 @COMPURAMAVE</a></li>
-            <li><a href="https://www.facebook.com/profile.php?id=61551884969800" target="_blank">📘 Facebook</a></li>
+            <li><a href="https://wa.me/584245339698" target="_blank"><i class="fab fa-whatsapp" style="margin-right:8px;"></i> 0424-5339698</a></li>
+            <li><a href="https://instagram.com/compuramave" target="_blank"><i class="fab fa-instagram" style="margin-right:8px;"></i> @COMPURAMAVE</a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61551884969800" target="_blank"><i class="fab fa-facebook-f" style="margin-right:8px;"></i> Facebook</a></li>
             <li><a href="#">🏢 RIF: J-309735160</a></li>
           </ul>
         </div>
@@ -970,7 +973,7 @@
   <!-- ===== WHATSAPP FLOAT ===== -->
   <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20un%20producto" target="_blank"
     class="whatsapp-float" title="Contáctanos por WhatsApp" onclick="trackEvent('whatsapp_contact', { location: 'floating_button' })">
-    💬
+    <i class="fab fa-whatsapp"></i>
   </a>
 
   <!-- ===== MOBILE STICKY CTA ===== -->
@@ -979,44 +982,13 @@
     <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Me%20interesa%20un%20producto" target="_blank" class="sticky-btn sticky-btn-whatsapp" onclick="trackEvent('whatsapp_contact', { location: 'sticky_cta' })">📱 WhatsApp</a>
   </div>
 
-  <!-- ===== WEEKLY PROMO BUBBLE ===== -->
-  <div class="weekly-promo-bubble" id="promo-bubble">
-    <div class="promo-header">
-      <span class="promo-icon">🎁</span>
-      <div class="promo-info">
-        <h4>¡Súper Descuento Web!</h4>
-        <p>Hasta 10% de descuento solo esta semana</p>
-      </div>
-    </div>
-    <div class="promo-countdown" id="weekly-countdown">
-      <div class="cd-slot">
-        <span id="promo-days">00</span>
-        <small>Días</small>
-      </div>
-      <div class="cd-slot">
-        <span id="promo-hours">00</span>
-        <small>Horas</small>
-      </div>
-      <div class="cd-slot">
-        <span id="promo-mins">00</span>
-        <small>Min</small>
-      </div>
-      <div class="cd-slot">
-        <span id="promo-secs">00</span>
-        <small>Seg</small>
-      </div>
-    </div>
-    <div class="promo-footer">
-      <a href="#laptops" class="promo-btn">Aprovechar Ahora 🚀</a>
-    </div>
-    <button class="promo-close" onclick="document.getElementById('promo-bubble').style.display='none'">✕</button>
-  </div>
+
 
   <!-- ===== FLOATING SOCIAL FOLLOW ===== -->
   <div class="social-share-floating">
-    <a href="https://www.facebook.com/profile.php?id=61551884969800" target="_blank" title="Síguenos en Facebook" class="share-fb">FB</a>
-    <a href="https://instagram.com/compuramave" target="_blank" title="Síguenos en Instagram" class="share-ig">IG</a>
-    <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Vengo%20desde%20la%20web" target="_blank" title="Escríbenos por WhatsApp" class="share-wa">WA</a>
+    <a href="https://www.facebook.com/profile.php?id=61551884969800" target="_blank" title="Síguenos en Facebook" class="share-fb"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://instagram.com/compuramave" target="_blank" title="Síguenos en Instagram" class="share-ig"><i class="fab fa-instagram"></i></a>
+    <a href="https://wa.me/584245339698?text=Hola%20Compurama!%20Vengo%20desde%20la%20web" target="_blank" title="Escríbenos por WhatsApp" class="share-wa"><i class="fab fa-whatsapp"></i></a>
   </div>
 
   <script src="app.js"></script>

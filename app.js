@@ -241,85 +241,173 @@ async function loadProductsFromSheet() {
         return brand || 'Compurama';
       }
 
-      function getDesc(t, rowDesc, cat) {
-        if (rowDesc && rowDesc.trim().length > 10) return rowDesc;
+      function getProductEnhancements(titleLower, rowDesc, category, rawTitle) {
+        let desc = rowDesc && rowDesc.trim().length > 10 ? rowDesc : '';
+        let specs = [];
 
-        if (cat === 'refurbished') {
-          let desc = '';
-          if (t.includes('5400')) desc = 'Dell Latitude 5400 Refurbished: Procesador Intel Core i5 de 8va generación, 8GB RAM, 256GB SSD. Laptop empresarial reacondicionada.';
-          else if (t.includes('dell') && (t.includes('4ta') || t.includes('4th'))) desc = 'Dell Latitude Refurbished: Procesador Intel Core i5 de 4ta generación, 8GB RAM, 128GB SSD. Laptop profesional reacondicionada certificada.';
-          else if (t.includes('probook') || (t.includes('hp') && t.includes('4ta'))) desc = 'HP ProBook Refurbished: Procesador Intel Core i5 de 4ta generación. Laptop empresarial reacondicionada con acabado profesional.';
-          else if (t.includes('l390')) desc = 'Lenovo ThinkPad L390 Refurbished: Laptop empresarial compacta y resistente, procesador Intel Core i5, diseño ultraportátil.';
-          else if (t.includes('t440')) desc = 'Lenovo ThinkPad T440 Refurbished: Clásica laptop empresarial con teclado legendario, procesador Intel Core i5, diseño robusto.';
-          else if (t.includes('x260')) desc = 'Lenovo ThinkPad X260 Refurbished: Ultraportátil empresarial de 12.5", procesador Intel Core i5, construcción premium MIL-SPEC.';
-          else if (t.includes('surface') || t.includes('microsoft')) desc = 'Microsoft Surface Refurbished: Procesador Intel Core i5, 8GB RAM, 256GB SSD. Diseño premium 2-en-1, pantalla táctil. Reacondicionada certificada.';
-          else if (t.includes('dell')) desc = 'Laptop Dell Refurbished: Equipo empresarial certificado y probado para máximo rendimiento.';
-          else if (t.includes('hp')) desc = 'Laptop HP Refurbished: Equipo empresarial certificado y probado para máximo rendimiento.';
-          else if (t.includes('lenovo')) desc = 'Laptop Lenovo Refurbished: Equipo empresarial certificado y probado para máximo rendimiento.';
-          else desc = 'Laptop reacondicionada certificada con rendimiento profesional a precio accesible.';
-          
-          return desc + ' (Ofrecemos 3 meses de garantía)';
+        if (category === 'laptops' || category === 'refurbished') {
+          if (titleLower.includes('ryzen 3')) specs.push('Procesador AMD Ryzen 3');
+          else if (titleLower.includes('ryzen 5')) specs.push('Procesador AMD Ryzen 5');
+          else if (titleLower.includes('ryzen 7')) specs.push('Procesador AMD Ryzen 7');
+          else if (titleLower.includes('i3')) specs.push('Procesador Intel Core i3');
+          else if (titleLower.includes('i5')) specs.push('Procesador Intel Core i5');
+          else if (titleLower.includes('i7')) specs.push('Procesador Intel Core i7');
+          else if (titleLower.includes('n5095') || titleLower.includes('cameron')) specs.push('Procesador Intel Celeron N5095');
+          else if (titleLower.includes('n5096')) specs.push('Procesador Intel Celeron N5096');
+
+          if (titleLower.match(/8\s*(?:gb)?\s*(?:y|\/|-)?\s*256\s*(?:gb)?/i) || (rowDesc && (rowDesc.includes('8/256GB') || (rowDesc.includes('8GB') && rowDesc.includes('256GB'))))) {
+            specs.push('Memoria RAM: 8GB', 'Almacenamiento: 256GB SSD');
+          } else if (titleLower.match(/16\s*(?:gb)?\s*(?:y|\/|-)?\s*512\s*(?:gb)?/i) || (rowDesc && (rowDesc.includes('16/512GB') || (rowDesc.includes('16GB') && rowDesc.includes('512GB'))))) {
+            specs.push('Memoria RAM: 16GB', 'Almacenamiento: 512GB SSD');
+          } else if (titleLower.match(/8\s*(?:gb)?\s*(?:y|\/|-)?\s*512\s*(?:gb)?/i)) {
+            specs.push('Memoria RAM: 8GB', 'Almacenamiento: 512GB SSD');
+          } else if (titleLower.match(/16\s*(?:gb)?\s*(?:y|\/|-)?\s*256\s*(?:gb)?/i)) {
+            specs.push('Memoria RAM: 16GB', 'Almacenamiento: 256GB SSD');
+          }
+
+          if (titleLower.includes('vivobook') || titleLower.includes('ideapad') || titleLower.includes('surface') || titleLower.includes('latitude') || titleLower.includes('thinkpad')) {
+             if (titleLower.includes('vivobook')) desc = desc || 'Asus Vivobook: Diseño elegante, pantalla de marcos ultra delgados y rendimiento superior para tu día a día.';
+             else if (titleLower.includes('ideapad')) desc = desc || 'Lenovo IdeaPad: Potencia y portabilidad en un chasis moderno. Ideal para estudio y teletrabajo con sonido estéreo.';
+             else if (titleLower.includes('surface')) desc = desc || 'Microsoft Surface: Experiencia premium 2-en-1 con pantalla táctil y diseño ligero para productividad en marcha.';
+             else if (titleLower.includes('latitude')) desc = desc || 'Dell Latitude: Robustez empresarial y herramientas de seguridad avanzadas. Lista para grandes proyectos empresariales.';
+             else if (titleLower.includes('thinkpad')) desc = desc || 'Lenovo ThinkPad: El estándar de oro empresarial. Teclado ergonómico, diseño MIL-SPEC super resistente y batería de larga duración.';
+          }
+
+          if (category === 'refurbished') {
+            desc += (desc ? ' ' : '') + 'Equipo Reacondicionado Certificado. Incluye 3 meses de garantía por defectos de fábrica. Probado y testeado para máximo rendimiento a un precio imbatible.';
+          } else {
+             desc = desc || 'Laptop de última generación con rendimiento excepcional, ideal para trabajo, estudios y entretenimiento digital.';
+          }
+        } 
+        else if (category === 'pc') {
+          if (titleLower.includes('gamer') || titleLower.includes('rx ') || titleLower.includes('ryzen')) {
+            desc = desc || 'PC de Escritorio Gamer: Ensamblada con componentes de alto rendimiento para correr tus juegos favoritos y aplicaciones exigentes de diseño o edición.';
+            if (titleLower.includes('ryzen 5 2600')) specs.push('Procesador AMD Ryzen 5 2600');
+            if (titleLower.includes('rx 470') || titleLower.includes('rx 570')) specs.push('Gráficos Radeon RX series');
+          } else {
+            desc = desc || 'Computadora de Escritorio: Ensamblada para ofrecer estabilidad y rendimiento en tareas de oficina, puntos de venta o uso doméstico.';
+          }
+          if (titleLower.includes('8') && titleLower.includes('256')) {
+            specs.push('Memoria RAM: 8GB', 'Almacenamiento: 256GB SSD');
+          }
         }
-        if (cat === 'tablets') {
-          if (t.includes('hi10 xpro')) return 'Tablet Chuwi Hi10 Xpro: Pantalla de 10.1" IPS, Android 13, 128GB de almacenamiento y 4GB de RAM. Procesador Octa-core para un rendimiento fluido en estudios y entretenimiento.';
-          if (t.includes('aupad')) return 'Tablet Chuwi Aupad: Pantalla de 10.1" de alta definición, diseño elegante y ultra delgado. Ideal para productividad portátil y consumo de medios con batería de larga duración.';
-          if (t.includes('dialn g10')) return 'Tablet Dialn G10: Potente tablet de 10 pulgadas con conectividad avanzada. Perfecta para el día a día, redes sociales y aplicaciones educativas.';
-          return 'Tablet de alto rendimiento con pantalla de gran nitidez, ideal para el trabajo y el entretenimiento en cualquier lugar.';
+        else if (category === 'monitores') {
+          if (titleLower.includes('xiaomi')) {
+            desc = desc || 'Monitor Xiaomi de 27 pulgadas, 165Hz de tasa de refresco y resolución FHD. Experiencia de juego ultra fluida con colores vibrantes y diseño minimalista sin bordes.';
+            specs.push('Tamaño: 27"', 'Frecuencia: 165Hz', 'Resolución: Full HD');
+          } else if (titleLower.includes('spidertec')) {
+             if (titleLower.includes('19.5')) {
+               desc = desc || 'Monitor Spidertec de 19.5 pulgadas con entradas HDMI y VGA. Resolución clara y diseño compacto, ideal para oficina y tareas diarias.';
+               specs.push('Tamaño: 19.5"', 'Conexiones: HDMI, VGA');
+             } else if (titleLower.includes('21.5')) {
+               desc = desc || 'Monitor Spidertec de 21.5 pulgadas con entradas HDMI y VGA. Mayor espacio de visualización con nitidez excepcional para productividad y entretenimiento.';
+               specs.push('Tamaño: 21.5"', 'Conexiones: HDMI, VGA');
+             }
+          }
+          if (specs.length === 0) {
+            desc = desc || 'Monitor de alta resolución con excelente nitidez y colores vibrantes para trabajo o gaming.';
+          }
         }
-        if (cat === 'ups') {
-          if (t.includes('kp3')) return 'Mini UPS Marsriva KP3 de 10.000 mAh. Proporciona energía de respaldo ininterrumpida para routers, módems y cámaras de seguridad. Durabilidad teórica: hasta 8 horas de respaldo continuo para un router estándar (estimado según consumo promedio).';
-          if (t.includes('kp2')) return 'Mini UPS Marsriva KP2 EC de 8.000 mAh. Sistema de respaldo inteligente y compacto para dispositivos de red. Durabilidad teórica: entre 4 y 6 horas de energía ininterrumpida para un router estándar.';
-          return 'Mini UPS de alta eficiencia para mantener tu conexión a internet siempre activa durante fallas eléctricas.';
+        else if (category === 'impresoras') {
+          if (titleLower.includes('laser')) specs.push('Tecnología: Láser');
+          else if (titleLower.includes('ecotank') || titleLower.includes('tinta')) specs.push('Tecnología: Inyección de Tinta (EcoTank)');
+
+          if (titleLower.includes('l1250') || titleLower.includes('wifi') || titleLower.includes('wi-fi') || titleLower.includes('mf264dw')) specs.push('Conectividad: Wi-Fi Integrado');
+
+          if (titleLower.includes('epson')) {
+            desc = desc || 'Impresora Epson de alto rendimiento. Resultados profesionales en cada impresión con gran ahorro en consumibles.';
+          } else if (titleLower.includes('hp')) {
+            desc = desc || 'Impresora HP: Calidad de texto y gráficos insuperable. Diseño compacto ideal para el hogar o pequeña oficina.';
+          }
+          desc = desc || 'Impresora versátil y confiable, lista para cubrir tus necesidades de documentos e imágenes nítidas.';
         }
-        if (cat === 'pc') {
-          if (t.includes('gamer') || t.includes('rx 470') || t.includes('rx 570')) return 'PC Gamer con procesador AMD Ryzen 5 2600, tarjeta gráfica RX 470, 8GB RAM, 256GB M.2 SSD. Fuente de poder Thermaltake 80+ certificada. Ideal para gaming y tareas exigentes.';
-          return 'Potente computadora de escritorio diseñada para máximo rendimiento en tu hogar u oficina.';
+        else if (category === 'routers') {
+          if (titleLower.includes('ax12') || titleLower.includes('ax3000') || titleLower.includes('wifi 6')) {
+            specs.push('Tecnología: Wi-Fi 6');
+            if (titleLower.includes('ax3000')) specs.push('Velocidad Combinada: Hasta 3000 Mbps');
+            if (titleLower.includes('ax12')) specs.push('Bandas: Dual Band (2.4GHz / 5GHz)');
+            desc = desc || 'Router de última generación Wi-Fi 6: Elimina el lag de tus juegos y asegura streaming en 4K/8K sin interrupciones con capacidad para múltiples dispositivos.';
+          } else if (titleLower.includes('ac12') || titleLower.includes('ac10') || titleLower.includes('ac1200')) {
+            specs.push('Tecnología: Wi-Fi 5 (AC)');
+            specs.push('Velocidad Combinada: Hasta 1200 Mbps');
+            desc = desc || 'Router Inalámbrico Dual Band. Ofrece conexiones simultáneas para trabajo fluido, videollamadas claras y entretenimiento digital.';
+          }
+          if (specs.length === 0) desc = desc || 'Router inalámbrico de alta potencia para extender y asegurar tu conexión a internet por toda la casa.';
         }
-        if (cat === 'routers') {
-          if (t.includes('ac12') || t.includes('mercusys')) return 'Router Mercusys AC12 AC1200: Router WiFi de doble banda con velocidades de hasta 1200 Mbps. Banda 5GHz (867 Mbps) y 2.4GHz (300 Mbps). 4 antenas de alta ganancia para amplia cobertura. Ideal para streaming, gaming y múltiples dispositivos.';
-          if (t.includes('ac10')) return 'Router TP-Link AC10 con WiFi de doble banda AC1200. Velocidades de hasta 1200 Mbps combinadas para una conexión estable y rápida.';
-          if (t.includes('ax12')) return 'Router WiFi 6 AX12 de última generación. Velocidades ultrarrápidas y mayor capacidad para múltiples dispositivos conectados simultáneamente.';
-          if (t.includes('ax3000')) return 'Router WiFi 6 AX3000: Velocidades de hasta 3000 Mbps combinadas. Tecnología MU-MIMO y OFDMA para conexiones eficientes con múltiples dispositivos.';
-          return rowDesc || 'Router de alto rendimiento para una conexión WiFi rápida y estable en todo tu hogar.';
+        else if (category === 'tablets') {
+          if (titleLower.includes('hi10 xpro')) {
+            desc = desc || 'Tablet Chuwi Hi10 Xpro: Pantalla de 10.1" IPS, Android 13, 128GB de almacenamiento y 4GB de RAM. Procesador Octa-core para un rendimiento fluido en estudios y entretenimiento.';
+            specs.push('Pantalla: 10.1" IPS', 'Sistema: Android 13', 'Almacenamiento: 128GB', 'RAM: 4GB');
+          } else if (titleLower.includes('aupad')) {
+            desc = desc || 'Tablet Chuwi Aupad: Pantalla de 10.1" de alta definición, diseño elegante y ultra delgado. Ideal para productividad portátil y consumo de medios con batería de larga duración.';
+            specs.push('Pantalla: 10.1" HD');
+          }
+          desc = desc || 'Tablet de alto rendimiento con diseño ultraportable. Perfecta para consumir contenido multimedia, navegar y estudiar.';
         }
-        if (cat === 'monitores') {
-          if (t.includes('spidertec') && t.includes('19.5')) return 'Monitor Spidertec de 19.5 pulgadas con entradas HDMI y VGA. Resolución clara y diseño compacto, ideal para oficina y tareas diarias.';
-          if (t.includes('spidertec') && t.includes('21.5')) return 'Monitor Spidertec de 21.5 pulgadas con entradas HDMI y VGA. Mayor espacio de visualización con nitidez excepcional para productividad y entretenimiento.';
-          if (t.includes('xiaomi')) return 'Monitor Xiaomi de 27 pulgadas, 165Hz de tasa de refresco y resolución FHD. Experiencia de juego ultra fluida con colores vibrantes y diseño minimalista sin bordes.';
-          return 'Monitor de alta resolución con excelente nitidez y colores vibrantes para trabajo o gaming.';
+        else if (category === 'ups') {
+          if (titleLower.includes('kp3')) {
+            desc = desc || 'Mini UPS Marsriva KP3 de 10.000 mAh. Proporciona energía de respaldo ininterrumpida para routers, módems y cámaras de seguridad. Durabilidad teórica: hasta 8 horas de respaldo continuo.';
+            specs.push('Capacidad: 10.000 mAh', 'Salidas Múltiples', 'Autonomía: Hasta 8 horas');
+          } else if (titleLower.includes('kp2')) {
+            desc = desc || 'Mini UPS Marsriva KP2 EC de 8.000 mAh. Sistema de respaldo inteligente y compacto para dispositivos de red. Durabilidad teórica: entre 4 y 6 horas de energía ininterrumpida.';
+            specs.push('Capacidad: 8.000 mAh', 'Salidas DC PoE', 'Autonomía: Hasta 6 horas');
+          }
+          desc = desc || 'Powerbank / Mini UPS de alta capacidad para mantener el internet activo durante cortes de luz.';
         }
-        if (cat === 'accesorios') {
-          if (t.includes('microfono')) return 'Set de 2 micrófonos de solapa inalámbricos TX. Compatibles con iPhone (Lightning) y dispositivos Tipo-C. Calidad de audio profesional, ideal para contenido en redes sociales y entrevistas.';
-          if (t.includes('dualshock')) return 'Control Dualshock 4 para PS4: Diseño ergonómico, panel táctil y sticks de alta precisión. Perfecto para una experiencia de juego inmersiva.';
-          if (t.includes('fire tv')) return 'Amazon Fire TV Stick 4K: Convierte tu TV en inteligente con acceso a miles de apps de streaming en resolución 4K Ultra HD.';
-          if (t.includes('roku')) return 'Dispositivo de streaming Roku: Acceso fácil a miles de canales gratuitos y de pago. Streaming de alta velocidad y configuración sencilla.';
-          if (t.includes('micro sd')) return 'Tarjeta Micro SD Kingston 128GB: Almacenamiento confiable y rápido para tu smartphone, cámara o tablet. Clase 10 UHS-I.';
-          if (t.includes('ssd')) return 'Disco de estado sólido (SSD) Dahua: Mejora drásticamente la velocidad de tu computadora. Arranque instantáneo y carga de archivos ultrarrápida.';
-          return rowDesc || 'Accesorio tecnológico de alta calidad para complementar tu equipo.';
+        else if (category === 'accesorios') {
+          if (titleLower.includes('microfono')) {
+            desc = desc || 'Set de micrófonos de alta fidelidad, diseñados para capturar la mejor voz, reduciendo ruidos e interferencias. Ideales para solapa, vlogs o entrevistas.';
+            specs.push('Tipo: Omnidireccional', 'Conexión Plug & Play');
+          } else if (titleLower.includes('control') || titleLower.includes('dualshock')) {
+            desc = desc || 'Mando ergonómico para videojuegos con respuesta táctil precisa, compatible con tus plataformas favoritas para largas sesiones de gaming.';
+            specs.push('Diseño Ergonómico', 'Sticks de Alta Precisión');
+          } else if (titleLower.includes('roku') || titleLower.includes('fire tv')) {
+            desc = desc || 'Dispositivo de streaming que convierte cualquier TV en inteligente. Accede a las principales plataformas como Netflix, YouTube y Prime Video en alta definición.';
+            if (titleLower.includes('4k')) specs.push('Resolución: 4K Ultra HD');
+            specs.push('Control Remoto con Voz');
+          } else if (titleLower.includes('ssd') || titleLower.includes('micro sd')) {
+             desc = desc || 'Almacenamiento flash de alta velocidad, multiplicando el rendimiento de lectura y escritura comparado con las unidades tradicionales.';
+             if (titleLower.includes('1tb')) specs.push('Capacidad: 1TB');
+             else if (titleLower.includes('512') || titleLower.includes('500')) specs.push('Capacidad: 512GB/500GB');
+             else if (titleLower.includes('256') || titleLower.includes('240')) specs.push('Capacidad: 256GB/240GB');
+             else if (titleLower.includes('128') || titleLower.includes('120')) specs.push('Capacidad: 128GB/120GB');
+          }
+          desc = desc || 'Accesorio tecnológico imprescindible de alta durabilidad y máximo rendimiento para optimizar tu set-up.';
         }
-        if (cat === 'audio') {
-          return 'Audífonos Gamer Xtrike Me: Sonido estéreo de alta calidad, micrófono omnidireccional y diseño ergonómico para largas sesiones de juego.';
+        else if (category === 'mouses' || category === 'teclados' || category === 'audio') {
+           if (titleLower.includes('gamer')) {
+             desc = desc || 'Periférico Gamer avanzado con iluminación integrada y diseño enfocado en la precisión y rapidez de respuesta.';
+             specs.push('Estilo Gamer', 'Alta Respuesta');
+             if (category === 'mouses') specs.push('Sensor Óptico Preciso', 'DPI Ajustable');
+             if (category === 'teclados') specs.push('Retroiluminado', 'Tactilidad Superior');
+             if (category === 'audio') specs.push('Sonido Envolvente', 'Micrófono Omnidireccional', 'Cancelación de Ruido Pasiva');
+           } else {
+             desc = desc || 'Periférico de oficina diseñado para ofrecer una jornada laboral cómoda y eficiente. Materiales duraderos y de suave pulsación.';
+           }
         }
-        if (cat === 'mouses') {
-          return 'Mouse Gamer Xtrike Me: Sensor óptico de alta precisión, DPI ajustable y diseño ergonómico con iluminación RGB.';
+        else if (category === 'sillas') {
+          desc = desc || 'Silla ergonómica de alta resistencia, fabricada con materiales acolchados que se ajustan al contorno natural de tu espalda. Ideal tanto para setups gamer como oficinas.';
+          specs.push('Diseño Ergonómico', 'Altura Ajustable', 'Base de Alta Resistencia');
         }
-        if (cat === 'teclados') {
-          return 'Teclado Gamer Xtrike Me: Teclas de alto rendimiento con respuesta táctil rápida y retroiluminación para gaming nocturno.';
+        else if (category === 'proyectores') {
+          desc = desc || 'Lleva el cine a tu sala con este proyector portátil. Excelente luminosidad, conectividad inteligente y altavoces integrados.';
+          if (titleLower.includes('720p')) specs.push('Resolución Nativa: 720p HD (Soporta 1080p)');
+          if (titleLower.includes('magcubic')) specs.push('Sistema Smart Integrado', 'Ajuste de Ángulo Libre');
         }
-        if (cat === 'proyectores') {
-          return 'Proyector Inteligente Magcubic: Resolución nativa clara, alto brillo y conectividad versátil. Transforma cualquier pared en un cine en casa.';
+        else {
+          desc = desc || 'Excelente equipo de alta durabilidad, diseñado con tecnología confiable para simplificarte la vida.';
         }
-        if (cat === 'sillas') {
-          return rowDesc || 'Silla Gamer ergonómica de alta calidad, ideal para largas jornadas de juego o trabajo. Diseño cómodo y resistente.';
-        }
-        return rowDesc || '';
+
+        return { description: desc, specs: specs };
       }
 
       const localImagePath = getLocalImage(titleLower, category);
+      const enhancements = getProductEnhancements(titleLower, row[2], category, title);
+      
       return {
         id: row[0] || 'GEN-' + Math.floor(Math.random() * 10000),
         name: title,
-        description: getDesc(titleLower, row[2], category),
+        description: enhancements.description,
         stock: parseInt(row[3] || '0', 10),
         brand: getBrand(titleLower, row[4]),
         image: (row[5] && row[5].trim().startsWith('http') && !row[5].includes('imgur.com/a/')) ? row[5].trim() : localImagePath,
@@ -327,7 +415,7 @@ async function loadProductsFromSheet() {
         price: priceVal,
         category: category,
         badge: isRefurbished ? 'sale' : null,
-        specs: []
+        specs: enhancements.specs
       };
     }).filter(p => p.price > 0); // No mostrar items sin precio configurado
 
@@ -387,9 +475,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateFlashTimer();
   setInterval(updateFlashTimer, 1000);
 
-  // Activar temporizador Promo Semanal (Hasta 11 de Abril 2026)
-  updateWeeklyPromoCountdown();
-  setInterval(updateWeeklyPromoCountdown, 1000);
+
 
   // Escuchar cambios de hash para navegación directa
   window.addEventListener('hashchange', () => {
@@ -456,33 +542,7 @@ function updateFlashTimer() {
   if (elS) elS.textContent = s.toString().padStart(2, '0');
 }
 
-// ===== WEEKLY PROMO TIMER =====
-function updateWeeklyPromoCountdown() {
-  const targetDate = new Date('April 11, 2026 23:59:59').getTime();
-  const now = new Date().getTime();
-  const diff = targetDate - now;
 
-  const bubble = document.getElementById('promo-bubble');
-  if (diff <= 0) {
-    if (bubble) bubble.style.display = 'none';
-    return;
-  }
-
-  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-  const elD = document.getElementById('promo-days');
-  const elH = document.getElementById('promo-hours');
-  const elM = document.getElementById('promo-mins');
-  const elS = document.getElementById('promo-secs');
-
-  if (elD) elD.textContent = d.toString().padStart(2, '0');
-  if (elH) elH.textContent = h.toString().padStart(2, '0');
-  if (elM) elM.textContent = m.toString().padStart(2, '0');
-  if (elS) elS.textContent = s.toString().padStart(2, '0');
-}
 
 // ===== RENDER PRODUCTS =====
 function renderProducts(filter) {
@@ -716,10 +776,12 @@ function openModal(productId) {
         </div>
 
         <div class="modal-description">${p.description}</div>
+        ${p.specs && p.specs.length > 0 ? `
         <div class="modal-specs">
           <h4>Especificaciones</h4>
           ${p.specs.map(s => `<span class="spec-tag">${s}</span>`).join('')}
         </div>
+        ` : ''}
         ${p.stock > 0 ? `
         <p style="font-size:0.85rem;color:var(--gray-500);margin-bottom:16px; margin-top:16px;">
           📦 Stock disponible: ${p.stock} unidades
