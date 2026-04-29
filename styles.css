@@ -3026,73 +3026,7 @@ ul {
   color: var(--white);
 }
 
-/* ===== MOBILE STICKY CTA ===== */
-.mobile-sticky-cta {
-  display: none;
-}
 
-@media (max-width: 768px) {
-  .mobile-sticky-cta {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 998;
-    background: rgba(6, 18, 36, 0.97);
-    backdrop-filter: blur(10px);
-    padding: 10px 16px;
-    gap: 10px;
-    border-top: 1px solid rgba(0, 229, 255, 0.15);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  .sticky-btn {
-    flex: 1;
-    text-align: center;
-    padding: 12px 16px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .sticky-btn-catalog {
-    background: var(--gradient-brand);
-    color: var(--white);
-    box-shadow: 0 2px 12px rgba(0, 102, 204, 0.4);
-  }
-
-  .sticky-btn-whatsapp {
-    background: #25d366;
-    color: var(--white);
-    box-shadow: 0 2px 12px rgba(37, 211, 102, 0.4);
-  }
-
-  .sticky-btn:active {
-    transform: scale(0.97);
-  }
-
-  /* Adjust WhatsApp float when sticky CTA is visible */
-  .whatsapp-float {
-    bottom: 80px;
-  }
-
-  /* Adjust toast position when sticky CTA is visible */
-  .toast {
-    bottom: 90px;
-  }
-
-  /* Add padding to body so content isn't hidden behind sticky CTA */
-  body {
-    padding-bottom: 70px;
-  }
-}
 
 /* ===== PC COMPONENTES FEATURES ===== */
 
@@ -3223,6 +3157,74 @@ ul {
   border: 1px solid rgba(255,255,255,0.2) !important;
 }
 
+/* ===== MOBILE STICKY CTA ===== */
+.mobile-sticky-cta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-sticky-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 998;
+    background: rgba(6, 18, 36, 0.97);
+    backdrop-filter: blur(10px);
+    padding: 10px 16px;
+    gap: 10px;
+    border-top: 1px solid rgba(0, 229, 255, 0.15);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .sticky-btn {
+    flex: 1;
+    text-align: center;
+    padding: 12px 16px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .sticky-btn-catalog {
+    background: var(--gradient-brand);
+    color: var(--white);
+    box-shadow: 0 2px 12px rgba(0, 102, 204, 0.4);
+  }
+
+  .sticky-btn-whatsapp {
+    background: #25d366;
+    color: var(--white);
+    box-shadow: 0 2px 12px rgba(37, 211, 102, 0.4);
+  }
+
+  .sticky-btn:active {
+    transform: scale(0.97);
+  }
+
+  /* Adjust WhatsApp float when sticky CTA is visible */
+  .whatsapp-float {
+    bottom: 80px;
+  }
+
+  /* Adjust toast position when sticky CTA is visible */
+  .toast {
+    bottom: 90px;
+  }
+
+  /* Add padding to body so content isn't hidden behind sticky CTA */
+  body {
+    padding-bottom: 70px;
+  }
+}
+
 /* ===== FLOATING SOCIAL SHARE ===== */
 .social-share-floating {
   position: fixed;
@@ -3258,11 +3260,65 @@ ul {
 
 @media (max-width: 768px) {
   .social-share-floating {
-    bottom: 20px;
+    bottom: 80px; /* Elevado para no tapar la barra sticky */
     top: auto;
-    right: 20px;
+    left: 20px;   /* Movido a la izquierda para no chocar con el botón flotante de WhatsApp */
+    right: auto;
     transform: none;
     flex-direction: row;
   }
 }
 
+
+/* ===== TRUST PROCESS SECTION ===== */
+.trust-process {
+  padding: 60px 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.process-card {
+  text-align: center;
+  padding: 30px;
+  border-radius: var(--radius);
+  background: var(--gray-100);
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.process-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--cyan);
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+}
+
+.process-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.process-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  color: var(--primary);
+}
+
+.process-card p {
+  font-size: 0.95rem;
+  color: var(--gray-600);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
