@@ -111,6 +111,8 @@ async function loadProductsFromSheet() {
         category = 'proyectores';
       } else if (titleLower.includes('silla') || titleLower.includes('chair') || titleLower.includes('gamer chair') || titleLower.includes('sillas')) {
         category = 'sillas';
+      } else if (titleLower.includes('nevera') || titleLower.includes('refrigerador') || titleLower.includes('cocina') || titleLower.includes('lavadora') || titleLower.includes('licuadora') || titleLower.includes('batidora') || titleLower.includes('microondas') || titleLower.includes('freidora') || titleLower.includes('air fryer') || titleLower.includes('cafetera') || titleLower.includes('ventilador') || titleLower.includes('aire acondicionado') || titleLower.includes('congelador') || titleLower.includes('tostadora') || titleLower.includes('sanduchera') || titleLower.includes('procesador') || titleLower.includes('picatodo') || titleLower.includes('extractor') || titleLower.includes('electrodomestico')) {
+        category = 'electrodomesticos';
       } else if (titleLower.includes('microfono') || titleLower.includes('tx x2') || titleLower.includes('solapa') || titleLower.includes('roku') || titleLower.includes('fire tv') || titleLower.includes('dualshock') || titleLower.includes('ps4') || titleLower.includes('microsd') || titleLower.includes('micro sd') || titleLower.includes('ssd') || titleLower.includes('kingston') || titleLower.includes('dahua') || titleLower.includes('control ps')) {
         category = 'accesorios';
       }
@@ -161,6 +163,10 @@ async function loadProductsFromSheet() {
           if (t.includes('kb309') || t.includes('kb-309')) return 'catalogo/teclados/xtrike me kb309.jpg';
         } else if (cat === 'proyectores') {
           if (t.includes('hy300') || t.includes('hy-300') || t.includes('magcubic')) return 'catalogo/proyectores/proyector magcubic hy300 pro 720p.jpg';
+        } else if (cat === 'electrodomesticos') {
+          if (t.includes('secador') || t.includes('super megaturbo')) return 'catalogo/electrodomesticos/BellaLiss-Secador-Super-Megaturbo.jpg';
+          if (t.includes('cafetera')) return 'catalogo/electrodomesticos/cafetera raf 1,2l.jpg';
+          if (t.includes('extractor') || t.includes('jugo')) return 'catalogo/electrodomesticos/extractor de jugo oster 800w.jpg';
         } else if (cat === 'sillas') {
           if (t.includes('asturias') || t.includes('arturia')) return 'catalogo/mobiliarios/ASTURIAS-NEGRA-430x382.jpg';
           if (t.includes('madison')) return 'catalogo/mobiliarios/Silla-Ejecutiva-MADISON-N-1.jpg';
@@ -394,6 +400,25 @@ async function loadProductsFromSheet() {
           if (titleLower.includes('720p')) specs.push('Resolución Nativa: 720p HD (Soporta 1080p)');
           if (titleLower.includes('magcubic')) specs.push('Sistema Smart Integrado', 'Ajuste de Ángulo Libre');
         }
+        else if (category === 'electrodomesticos') {
+          if (titleLower.includes('nevera') || titleLower.includes('refrigerador')) {
+            desc = desc || 'Nevera de alta eficiencia energética con sistema de enfriamiento rápido y amplios compartimientos para organizar tus alimentos.';
+            specs.push('Eficiencia Energética', 'Control de Temperatura');
+          } else if (titleLower.includes('licuadora')) {
+            desc = desc || 'Licuadora de alta potencia con cuchillas de acero inoxidable, ideal para preparar batidos, salsas y triturar hielo con facilidad.';
+            specs.push('Cuchillas de Acero', 'Múltiples Velocidades');
+          } else if (titleLower.includes('freidora') || titleLower.includes('air fryer')) {
+            desc = desc || 'Freidora de aire caliente: Cocina tus platos favoritos con hasta un 80% menos de grasa, manteniendo el sabor y la textura crujiente.';
+            specs.push('Cocción sin Aceite', 'Temporizador Integrado');
+          } else if (titleLower.includes('ventilador')) {
+            desc = desc || 'Ventilador de alto flujo de aire con diseño silencioso y oscilación ajustable para mantener tu espacio fresco y cómodo.';
+            specs.push('Velocidades Ajustables', 'Bajo Consumo');
+          } else if (titleLower.includes('cafetera')) {
+            desc = desc || 'Cafetera automática diseñada para extraer el mejor aroma y sabor de tu café favorito cada mañana.';
+            specs.push('Filtro Permanente', 'Sistema Anti-goteo');
+          }
+          desc = desc || 'Electrodoméstico de alta calidad diseñado para facilitar las tareas del hogar con eficiencia y durabilidad.';
+        }
         else {
           desc = desc || 'Excelente equipo de alta durabilidad, diseñado con tecnología confiable para simplificarte la vida.';
         }
@@ -503,6 +528,7 @@ function trackSectionView(sectionId) {
     'teclados': 'Teclados y Gamers',
     'proyectores': 'Proyectores y Cine',
     'sillas': 'Sillas Gamer y Oficina',
+    'electrodomesticos': 'Línea Blanca y Electrodomésticos',
     'cashea': 'Financiamiento Cashea',
     'nosotros': 'Sobre Compurama',
     'contacto': 'Contacto'
