@@ -1029,10 +1029,17 @@ function performSearch(q) {
 function createProductCard(p) {
   const outOfStock = p.stock <= 0;
   
-  // Simulated PcComponentes Data
-  const idHash = p.name.length + (p.price * 10);
-  const rating = (4.5 + (idHash % 5) * 0.1).toFixed(1); 
-  const reviews = 15 + (idHash % 300);
+  // Simulated Ratings Logic (Realistic range)
+  const idHash = p.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) + Math.floor(p.price);
+  const ratingVal = 4.4 + ((idHash % 6) * 0.1);
+  const rating = ratingVal.toFixed(1);
+  const reviews = 12 + (idHash % 180);
+  
+  // Dynamic Stars based on rating
+  const fullStars = Math.floor(ratingVal);
+  const halfStar = (ratingVal % 1) >= 0.5 ? 1 : 0;
+  const starsHtml = '★'.repeat(fullStars) + (halfStar ? '½' : '') + '☆'.repeat(5 - fullStars - halfStar);
+
   
   // Decide badge text dynamically for "sale" to make it more aggressive sometimes
   let badgeHtml = '';
@@ -1069,7 +1076,7 @@ function createProductCard(p) {
         <div class="product-title">${p.name}</div>
         
         <div class="product-rating">
-          <span class="stars">★★★★★</span>
+          <span class="stars">${starsHtml}</span>
           <span class="rating-text">${rating}/5 (${reviews} opiniones)</span>
         </div>
         
