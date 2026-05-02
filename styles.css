@@ -3322,3 +3322,29 @@ ul {
     gap: 20px;
   }
 }
+
+/* ===== AD BANNERS ===== */
+.ad-banner-section {
+  padding: 40px 0;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.ad-label {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .ad-banner-section {
+    padding: 20px 0;
+  }
+}
