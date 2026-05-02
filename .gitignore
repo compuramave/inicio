@@ -1,0 +1,6 @@
+# Backup images (originals before optimization)
+*_BACKUP.*
+
+# Temp files
+*.tmp
+~$*

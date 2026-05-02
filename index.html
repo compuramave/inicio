@@ -11,14 +11,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://docs.google.com">
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
   <title>Compurama C.A. | Laptops, Impresoras y Tecnología en Barinas</title>
-  <script>
-    // Enforce HTTPS
-    if (window.location.protocol === 'http:' && !window.location.hostname.includes('localhost')) {
-      window.location.href = window.location.href.replace('http:', 'https:');
-    }
-  </script>
+
+  <!-- HTTPS is enforced by GitHub Pages — no JS redirect needed -->
 
   <meta name="description"
     content="Compurama C.A. - Tienda de tecnología en Barinas, Venezuela. Laptops, impresoras, routers y accesorios con garantía. Financiamiento con Cashea.">
@@ -98,14 +95,54 @@
   }
   </script>
 
-  <link rel="stylesheet" href="styles.css">
+  <!-- Critical CSS: Inline above-the-fold styles for instant render -->
+  <style>
+    /* Inline critical: fonts fallback, loader, navbar, hero shell */
+    :root {
+      --primary: #061224;
+      --accent: #0047AB;
+      --cyan: #00E5FF;
+      --cyan-light: #48cae4;
+      --white: #ffffff;
+      --gray-100: #f0f4f8;
+      --gray-200: #d9e2ec;
+      --gray-300: #bcccdc;
+      --gray-500: #546e7a;
+      --gradient-brand: linear-gradient(135deg, #0047AB 0%, #00E5FF 100%);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--gray-100); color: #102a43; line-height: 1.6; overflow-x: hidden; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Outfit', -apple-system, sans-serif; line-height: 1.2; }
+    img { max-width: 100%; height: auto; display: block; }
+    .global-loader { position: fixed; inset: 0; background: var(--white); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+    .spinner { width: 50px; height: 50px; border: 5px solid var(--gray-200); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .global-loader p { color: #334e68; font-weight: 600; letter-spacing: 1px; }
+    .navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: transparent; transition: var(--transition); }
+    .navbar .container { padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; max-width: 1280px; margin: 0 auto; }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo img { height: 42px; }
+    .hero { min-height: 100vh; display: flex; align-items: center; background: linear-gradient(135deg, var(--primary) 0%, #0d2137 50%, var(--primary) 100%); padding-top: 80px; }
+  </style>
+
+  <!-- Main stylesheet: loaded non-blocking with preload -->
+  <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="styles.css"></noscript>
+
   <link rel="icon" type="image/png" href="media/favicon.png">
   <link rel="apple-touch-icon" href="media/favicon.png">
 
-  <!-- FontAwesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts: Non-blocking preload (moved from CSS @import) -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap"></noscript>
 
-  <!-- Google Analytics (deferred for speed) -->
+  <!-- FontAwesome: Deferred load (only used for ~5 footer icons) -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+  <!-- Google Analytics (async — non-blocking) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2EP0XH6XEY"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -114,8 +151,8 @@
     gtag('config', 'G-2EP0XH6XEY');
   </script>
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1525892082687811"
+  <!-- Google AdSense: defer to not block rendering -->
+  <script defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1525892082687811"
     crossorigin="anonymous"></script>
 </head>
 
@@ -152,7 +189,7 @@
   <nav class="navbar" id="navbar">
     <div class="container">
       <a href="#" class="nav-logo">
-        <img src="media/logo.png" alt="Compurama Logo">
+        <img src="media/logo.png" alt="Compurama Logo" width="42" height="42">
         <span class="brand-name font-primary">COMPURAMA</span>
       </a>
       <div class="nav-links" id="nav-links">
@@ -205,7 +242,7 @@
                 📱 Asesoría por WhatsApp
               </a>
               <div class="cashea-hero-badge">
-                <img src="media/cashea logo.jpg" alt="Cashea">
+                <img src="media/cashea logo.jpg" alt="Cashea" width="20" height="20">
                 <span>Paga en cuotas</span>
               </div>
             </div>
@@ -226,7 +263,7 @@
           </div>
           <div class="hero-image">
             <img src="media/compuraman mascota fondo blanco.png" alt="Compuramán - Mascota de Compurama"
-              fetchpriority="high">
+              width="400" height="500" fetchpriority="high">
           </div>
         </div>
       </div>
@@ -249,11 +286,11 @@
     <section class="brand-partners reveal">
       <div class="container">
         <div class="partners-flex">
-          <img src="media/hp logo.png" alt="HP" title="HP Partner" loading="lazy">
-          <img src="media/intel logo.png" alt="Intel" title="Intel Technology" loading="lazy">
-          <img src="media/amd logo.png" alt="AMD" title="AMD Partner" loading="lazy">
-          <img src="media/Mastercard-logo.svg.png" alt="Mastercard" title="Pagos con Mastercard" loading="lazy">
-          <img src="media/cashea logo.jpg" alt="Cashea" title="Financiamiento con Cashea" loading="lazy">
+          <img src="media/hp logo.png" alt="HP" title="HP Partner" loading="lazy" width="60" height="40" decoding="async">
+          <img src="media/intel logo.png" alt="Intel" title="Intel Technology" loading="lazy" width="60" height="40" decoding="async">
+          <img src="media/amd logo.png" alt="AMD" title="AMD Partner" loading="lazy" width="60" height="40" decoding="async">
+          <img src="media/Mastercard-logo.svg.png" alt="Mastercard" title="Pagos con Mastercard" loading="lazy" width="60" height="40" decoding="async">
+          <img src="media/cashea logo.jpg" alt="Cashea" title="Financiamiento con Cashea" loading="lazy" width="40" height="40" decoding="async">
         </div>
       </div>
     </section>
@@ -802,7 +839,7 @@
         </div>
 
         <div class="cashea-partner-badge reveal">
-          <img src="media/cashea logo.jpg" alt="Cashea Logo">
+          <img src="media/cashea logo.jpg" alt="Cashea Logo" width="56" height="56" loading="lazy" decoding="async">
           <div>
             <h3>✅ Aliado Oficial Cashea</h3>
             <p>Compurama C.A. es una tienda verificada y autorizada por Cashea</p>
@@ -881,7 +918,7 @@
       <div class="container">
         <div class="about-grid">
           <div class="about-image reveal">
-            <img src="media/compuraman mascota fondo blanco.png" alt="Compuramán" loading="lazy">
+            <img src="media/compuraman mascota fondo blanco.png" alt="Compuramán" loading="lazy" width="400" height="500" decoding="async">
           </div>
           <div class="about-content reveal">
             <div class="section-tag">🏢 Sobre Nosotros</div>
@@ -983,7 +1020,7 @@
         <div class="footer-grid">
           <div class="footer-brand">
             <div class="footer-logo-box">
-              <img src="media/logo.png" alt="Compurama">
+              <img src="media/logo.png" alt="Compurama" width="40" height="40" loading="lazy" decoding="async">
               <span class="brand-name font-primary" style="font-size: 1.5rem; color: #fff;">COMPURAMA</span>
             </div>
             <p>Compurama C.A. — <span class="font-secondary" style="font-size:0.75rem;">Servicio y Tecnología</span>.
@@ -994,7 +1031,7 @@
               <a href="https://instagram.com/compuramave" target="_blank" title="Instagram"><i
                   class="fab fa-instagram"></i></a>
               <a href="https://wa.me/584245339698" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-              <img src="media/cashea logo.jpg" alt="Cashea" class="footer-cashea">
+              <img src="media/cashea logo.jpg" alt="Cashea" class="footer-cashea" width="24" height="24" loading="lazy" decoding="async">
             </div>
           </div>
           <div>
@@ -1104,7 +1141,7 @@
       title="Escríbenos por WhatsApp" class="share-wa"><i class="fab fa-whatsapp"></i></a>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
 </body>
 
 </html>

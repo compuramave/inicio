@@ -476,7 +476,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (loader) loader.style.display = 'none';
 
-  renderProducts('all');
+  // Render only above-the-fold sections immediately (bestsellers + refurbished)
+  renderInitialSections();
   setupBestsellersCarousel();
   setupCarousels();
   setupNavbar();
@@ -484,6 +485,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupSearch();
   setupScrollReveal();
   updateCartUI();
+  // Setup lazy rendering for remaining sections
+  setupLazyRender();
 
   // Verificar si hay un producto compartido en la URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -570,7 +573,21 @@ function updateFlashTimer() {
 
 
 
-// ===== RENDER PRODUCTS =====
+// ===== RENDER PRODUCTS (LAZY) =====
+// Track which sections have been rendered to avoid double-rendering
+const renderedSections = new Set();
+
+// ===== RENDER INITIAL SECTIONS (only above-the-fold) =====
+function renderInitialSections() {
+  // Only render refurbished (first product section visible after bestsellers)
+  const refurbishedGrid = document.querySelector('.carousel-track[data-section="refurbished"]');
+  if (refurbishedGrid) {
+    const items = products.filter(p => p.category === 'refurbished');
+    refurbishedGrid.innerHTML = items.map(p => createProductCard(p)).join('');
+    renderedSections.add('refurbished');
+  }
+}
+
 function renderProducts(filter) {
   const grids = $$('.carousel-track[data-section]');
   grids.forEach(grid => {
@@ -582,9 +599,44 @@ function renderProducts(filter) {
     });
 
     grid.innerHTML = items.map(p => createProductCard(p)).join('');
+    if (section) renderedSections.add(section);
 
     // Re-trigger reveal
     setupScrollReveal();
+  });
+}
+
+// Render a single section lazily
+function renderSection(grid) {
+  const section = grid.dataset.section;
+  if (!section || renderedSections.has(section)) return;
+
+  let items = products.filter(p => p.category === section);
+  grid.innerHTML = items.map(p => createProductCard(p)).join('');
+  renderedSections.add(section);
+  setupScrollReveal();
+}
+
+// Setup lazy rendering: only render product grids when near viewport
+function setupLazyRender() {
+  const lazyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const grid = entry.target.querySelector('.carousel-track[data-section]') || entry.target;
+        if (grid && grid.dataset && grid.dataset.section) {
+          renderSection(grid);
+        }
+        lazyObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '400px 0px' }); // Start rendering 400px before visible
+
+  // Observe each product section container
+  $$('.products[id]').forEach(section => {
+    const grid = section.querySelector('.carousel-track[data-section]');
+    if (grid && !renderedSections.has(grid.dataset.section)) {
+      lazyObserver.observe(section);
+    }
   });
 }
 
@@ -1001,6 +1053,7 @@ function performSearch(q) {
 
   let firstFoundSection = null;
 
+  // Search renders all sections (overrides lazy rendering)
   $$('.carousel-track[data-section]').forEach(grid => {
     const section = grid.dataset.section;
     const items = section ? filtered.filter(p => p.category === section) : filtered;
@@ -1063,7 +1116,7 @@ function createProductCard(p) {
     <div class="product-card reveal visible${outOfStock ? ' out-of-stock' : ''}" data-id="${p.id}">
       ${badgeHtml}
       <div class="product-image">
-        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null; this.src='${p.localImage}';">
+        <img src="${p.image}" alt="${p.name}" loading="lazy" width="280" height="210" decoding="async" onerror="this.onerror=null; this.src='${p.localImage}';">
         ${outOfStock ? '<div class="out-of-stock-overlay"><span>No Disponible</span></div>' : ''}
         <div class="product-actions">
           <button class="action-btn" onclick="openModal('${p.id}')" title="Ver detalle">👁</button>
@@ -1229,6 +1282,7 @@ function filterProducts(filter, grid) {
   }
 
   grid.innerHTML = items.map(p => createProductCard(p)).join('');
+  if (section) renderedSections.add(section);
   setupScrollReveal();
 }
 
