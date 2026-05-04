@@ -145,6 +145,15 @@ async function loadProductsFromSheet() {
       }
 
       function getLocalImage(t, cat) {
+        if (cat === 'componentes') {
+          if (t.includes('ssd') && t.includes('128')) return 'catalogo/Accesorios/ssd 128gb dahua.jpg';
+          if (t.includes('ssd') && t.includes('256')) return 'catalogo/Accesorios/ssd 256gb dahua.jpg';
+          if (t.includes('ssd') && t.includes('1tb')) return 'catalogo/Accesorios/ssd 1tb dahua.jpg';
+          if (t.includes('1030')) return 'catalogo/componentes pc/gpus/nvidia gt 1030 4gb.jpg';
+          if (t.includes('r5 430')) return 'catalogo/componentes pc/gpus/amd r5 430 2gb.jpg';
+          if (t.includes('gtx') || t.includes('rtx') || t.includes('rx ') || t.includes('video')) return 'catalogo/pc/PC RYZEN 5 2600 RX 570.jpg'; // Generic fallback for components
+        }
+
         if (cat === 'routers') {
           if (t.includes('ax3000')) return 'catalogo/routers/AX3000.jpg';
           if (t.includes('ax12')) return 'catalogo/routers/AX12.jpg';
@@ -500,9 +509,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const loader = document.getElementById('loader');
   if (loader) loader.style.display = 'flex';
 
-  await loadProductsFromSheet();
-
-  if (loader) loader.style.display = 'none';
+  try {
+    await loadProductsFromSheet();
+  } catch (err) {
+    console.error("Critical load error:", err);
+  } finally {
+    if (loader) loader.style.display = 'none';
+  }
 
   // Render only above-the-fold sections immediately (bestsellers + refurbished)
   renderInitialSections();
