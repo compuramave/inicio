@@ -86,8 +86,19 @@ async function loadProductsFromSheet() {
       let category = 'laptops';
       const isRefurbished = titleLower.includes('refurbished') || titleLower.includes('reacondicionad') || titleLower.includes('refurb');
       
-      const isPeripheral = titleLower.includes('mouse') || titleLower.includes('teclado') || titleLower.includes('keyboard') || titleLower.includes('audifono') || titleLower.includes('headset') || titleLower.includes('corneta');
-      if (titleLower.startsWith('pc ') || titleLower === 'pc' || titleLower.includes('escritorio') || titleLower.includes('all in one') || titleLower.includes('desktop') || (titleLower.includes('gamer') && !isPeripheral && (titleLower.includes('pc') || titleLower.includes('ryzen') || titleLower.includes('rx ') || titleLower.includes('cpu')))) {
+      const isPeripheral = titleLower.includes('mouse') || titleLower.includes('teclado') || titleLower.includes('keyboard') || titleLower.includes('audifono') || titleLower.includes('headset') || titleLower.includes('corneta') || titleLower.includes('bocina') || titleLower.includes('parlante');
+      
+      // Super Robust detection (to avoid classifying laptops/PCs as CPUs)
+      const laptopKeywords = ['laptop', 'portatil', 'notebook', 'vivobook', 'ideapad', 'slim', 'thinkpad', 'latitude', 'probook', 'surface', 'inspiron', 'zenbook', 'macbook', 'chromebook', 'elitebook', 'spectre', 'omen', 'victus', 'alienware', 'tuf dash', 'zephyrus', 'vostro', 'yoga', 'legion', 'pavilion', 'envy'];
+      const systemBrands = ['hp', 'dell', 'lenovo', 'acer', 'apple', 'gateway'];
+      const screenSizes = ['11.6', '12.4', '13.3', '14"', '15.6', '16"', '17.3'];
+      
+      const hasSystemBrand = systemBrands.some(brand => titleLower.startsWith(brand + ' ') || titleLower.includes(' ' + brand + ' '));
+      const isLaptop = laptopKeywords.some(kw => titleLower.includes(kw)) || screenSizes.some(sz => titleLower.includes(sz)) || (hasSystemBrand && !titleLower.includes('motherboard') && !titleLower.includes('tarjeta') && !titleLower.includes('memoria'));
+      
+      const isFullPC = titleLower.startsWith('pc ') || titleLower === 'pc' || titleLower.includes('escritorio') || titleLower.includes('all in one') || titleLower.includes('desktop') || (titleLower.includes('gamer') && !isPeripheral && !isLaptop && (titleLower.includes('pc') || titleLower.includes('ryzen') || titleLower.includes('rx ') || titleLower.includes('cpu')));
+
+      if (isFullPC) {
         category = 'pc';
       } else if (isRefurbished) {
         category = 'refurbished';
@@ -99,22 +110,38 @@ async function loadProductsFromSheet() {
         category = 'tablets';
       } else if (titleLower.includes('mini ups') || titleLower.includes('ups') || titleLower.includes('kp2') || titleLower.includes('kp3')) {
         category = 'ups';
-      } else if (titleLower.includes('monitor') || titleLower.includes('spidertec') || titleLower.includes('xiaomi') || titleLower.includes('pantalla')) {
+      } else if (titleLower.includes('monitor') || titleLower.includes('spidertec') || titleLower.includes('pantalla')) {
         category = 'monitores';
-      } else if (titleLower.includes('audifono') || titleLower.includes('audifonos') || titleLower.includes('headset') || titleLower.includes('corneta') || titleLower.includes('sonido') || titleLower.includes('gh513') || titleLower.includes('gh-513')) {
+      } else if (titleLower.includes('audifono') || titleLower.includes('audifonos') || titleLower.includes('headset') || titleLower.includes('corneta') || titleLower.includes('sonido')) {
         category = 'audio';
-      } else if (titleLower.includes('mouse') || titleLower.includes('raton') || titleLower.includes('gm217') || titleLower.includes('gm227') || titleLower.includes('gm316') || titleLower.includes('gm-217') || titleLower.includes('gm-227') || titleLower.includes('gm-316')) {
+      } else if (titleLower.includes('mouse') || titleLower.includes('raton')) {
         category = 'mouses';
-      } else if (titleLower.includes('teclado') || titleLower.includes('keyboard') || titleLower.includes('gk-980') || titleLower.includes('gk980') || titleLower.includes('kb-309') || titleLower.includes('kb309') || titleLower.includes('k7010')) {
+      } else if (titleLower.includes('teclado') || titleLower.includes('keyboard')) {
         category = 'teclados';
-      } else if (titleLower.includes('proyector') || titleLower.includes('magcubic') || titleLower.includes('hy300') || titleLower.includes('hy-300')) {
+      } else if (titleLower.includes('proyector') || titleLower.includes('magcubic')) {
         category = 'proyectores';
       } else if (titleLower.includes('silla') || titleLower.includes('chair') || titleLower.includes('gamer chair') || titleLower.includes('sillas')) {
         category = 'sillas';
-      } else if (titleLower.includes('nevera') || titleLower.includes('refrigerador') || titleLower.includes('cocina') || titleLower.includes('lavadora') || titleLower.includes('licuadora') || titleLower.includes('batidora') || titleLower.includes('microondas') || titleLower.includes('freidora') || titleLower.includes('air fryer') || titleLower.includes('cafetera') || titleLower.includes('ventilador') || titleLower.includes('aire acondicionado') || titleLower.includes('congelador') || titleLower.includes('tostadora') || titleLower.includes('sanduchera') || titleLower.includes('procesador') || titleLower.includes('picatodo') || titleLower.includes('extractor') || titleLower.includes('electrodomestico')) {
+      } else if (titleLower.includes('nevera') || titleLower.includes('refrigerador') || titleLower.includes('cocina') || titleLower.includes('lavadora') || titleLower.includes('licuadora') || titleLower.includes('batidora') || titleLower.includes('microondas') || titleLower.includes('freidora') || titleLower.includes('air fryer') || titleLower.includes('cafetera') || titleLower.includes('ventilador') || titleLower.includes('aire acondicionado') || titleLower.includes('congelador') || titleLower.includes('tostadora') || titleLower.includes('sanduchera') || titleLower.includes('picatodo') || titleLower.includes('extractor') || titleLower.includes('electrodomestico')) {
         category = 'electrodomesticos';
-      } else if (titleLower.includes('microfono') || titleLower.includes('tx x2') || titleLower.includes('solapa') || titleLower.includes('roku') || titleLower.includes('fire tv') || titleLower.includes('dualshock') || titleLower.includes('ps4') || titleLower.includes('microsd') || titleLower.includes('micro sd') || titleLower.includes('ssd') || titleLower.includes('kingston') || titleLower.includes('dahua') || titleLower.includes('control ps')) {
+      } else if (!isLaptop && !isFullPC && (titleLower.includes('procesador') || titleLower.includes('intel core') || titleLower.includes('ryzen') || titleLower.includes('motherboard') || titleLower.includes('tarjeta madre') || titleLower.includes('memoria ram') || titleLower.includes('tarjeta de video') || titleLower.includes('gtx') || titleLower.includes('rtx') || titleLower.includes('radeon rx') || titleLower.includes('fuente de poder') || titleLower.includes('power supply') || titleLower.includes('case gamer') || titleLower.includes('chasis') || titleLower.includes('disco duro') || titleLower.includes('grafica') || titleLower.includes('vga'))) {
+        // Strict component check: only if it contains specific component keywords AND is not a laptop/PC
+        category = 'componentes';
+      } else if (titleLower.includes('microfono') || titleLower.includes('roku') || titleLower.includes('fire tv') || titleLower.includes('dualshock') || titleLower.includes('ps4') || titleLower.includes('microsd') || titleLower.includes('micro sd') || titleLower.includes('ssd') || titleLower.includes('kingston') || titleLower.includes('dahua') || titleLower.includes('control ps')) {
         category = 'accesorios';
+      }
+
+      // Sub-categoría para el Armado de PC
+      let subCategory = null;
+      if (category === 'componentes' && !isLaptop && !isFullPC) {
+        if (titleLower.includes('procesador') || titleLower.includes('intel core') || titleLower.includes('ryzen') || titleLower.includes('athlon')) subCategory = 'cpu';
+        else if (titleLower.includes('motherboard') || titleLower.includes('tarjeta madre')) subCategory = 'motherboard';
+        else if (titleLower.includes('ram')) subCategory = 'ram';
+        else if (titleLower.includes('video') || titleLower.includes('gtx') || titleLower.includes('rtx') || titleLower.includes('radeon rx') || titleLower.includes('grafica') || titleLower.includes('vga')) subCategory = 'gpu';
+        else if (titleLower.includes('ssd') || titleLower.includes('disco duro') || titleLower.includes('nvme') || titleLower.includes('m.2')) subCategory = 'storage';
+        else if (titleLower.includes('fuente') || titleLower.includes('power supply') || titleLower.includes('psu')) subCategory = 'psu';
+        else if (titleLower.includes('case') || titleLower.includes('chasis') || titleLower.includes('gabinete')) subCategory = 'case';
+        else if (titleLower.includes('cooler') || titleLower.includes('disipador') || titleLower.includes('ventilador pc')) subCategory = 'cooling';
       }
 
       function getLocalImage(t, cat) {
@@ -439,6 +466,7 @@ async function loadProductsFromSheet() {
         localImage: localImagePath,
         price: priceVal,
         category: category,
+        subCategory: subCategory,
         badge: isRefurbished ? 'sale' : null,
         specs: enhancements.specs
       };
@@ -488,6 +516,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Setup lazy rendering for remaining sections
   setupLazyRender();
 
+  // Inicializar PC Builder
+  setupPCBuilder();
+
   // Verificar si hay un producto compartido en la URL
   const urlParams = new URLSearchParams(window.location.search);
   const sharedProduct = urlParams.get('product');
@@ -505,12 +536,42 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-  // Escuchar cambios de hash para navegación directa
-  window.addEventListener('hashchange', () => {
-    const section = window.location.hash.replace('#', '');
-    if (section) trackSectionView(section);
-  });
-});
+// ===== SPA ROUTING =====
+function handleRouting() {
+  const hash = window.location.hash || '#inicio';
+  const mainView = document.getElementById('view-main');
+  const builderView = document.getElementById('view-builder');
+
+  if (!mainView || !builderView) return;
+
+  if (hash === '#pc-builder') {
+    mainView.style.display = 'none';
+    builderView.style.display = 'block';
+    setupPCBuilder();
+    window.scrollTo(0, 0);
+    trackSectionView('pc-builder');
+  } else {
+    mainView.style.display = 'block';
+    builderView.style.display = 'none';
+    
+    // If it's a section hash, scroll to it
+    if (hash && hash !== '#inicio') {
+      const targetId = hash.replace('#', '');
+      const target = document.getElementById(targetId);
+      if (target) {
+        setTimeout(() => {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }, 100);
+      }
+    }
+  }
+}
+
+window.addEventListener('hashchange', handleRouting);
+window.addEventListener('load', handleRouting);
 
 // ===== VIRTUAL PAGE VIEW HELPER =====
 function trackSectionView(sectionId) {
@@ -519,19 +580,17 @@ function trackSectionView(sectionId) {
     'categorias': 'Categorías',
     'refurbished': 'Ofertas Refurbished',
     'laptops': 'Catálogo de Laptops',
+    'componentes': 'Hardware y Componentes',
+    'pc-builder': 'Armado de PC Pro',
     'pc': 'PCs de Escritorio',
     'impresoras': 'Impresoras y Multifuncionales',
     'routers': 'Routers y Conectividad',
     'tablets': 'Tablets y iPads',
     'ups': 'Sistemas de Respaldo',
     'monitores': 'Monitores y Pantallas',
-    'accesorios': 'Accesorios y Periféricos',
     'audio': 'Sonido y Audio',
     'mouses': 'Mouses y Punteros',
     'teclados': 'Teclados y Gamers',
-    'proyectores': 'Proyectores y Cine',
-    'sillas': 'Sillas Gamer y Oficina',
-    'electrodomesticos': 'Línea Blanca y Electrodomésticos',
     'cashea': 'Financiamiento Cashea',
     'nosotros': 'Sobre Compurama',
     'contacto': 'Contacto'
@@ -1329,39 +1388,185 @@ function scrollToSection(sectionId) {
     section_id: sectionId
   });
 }
-// ===== ADMINISTRATIVE HOOK (O) =====
-function executePurge() {
-  console.warn("ADMIN_PURGE_INITIATED");
-  localStorage.clear();
-  sessionStorage.clear();
 
-  const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#000;color:#0f0;font-family:monospace;z-index:99999;padding:20px;overflow:hidden;';
-  document.body.appendChild(overlay);
+// ===== PC BUILDER LOGIC =====
+let builderSelections = {
+  cpu: null,
+  motherboard: null,
+  ram: null,
+  gpu: null,
+  storage: null,
+  psu: null,
+  case: null
+};
 
-  const logs = [
-    '> INITIALIZING EMERGENCY MAINTENANCE...',
-    '> ACCESS_LEVEL: ROOT',
-    '> WIPING LOCAL_SESSION...',
-    '> DISCONNECTING VIRTUAL_DATABASE...',
-    '> PURGING CACHE...',
-    '> TERMINATING COMPURAMA_DASHBOARD...',
-    '> SYSTEM_HALTED.'
-  ];
+function setupPCBuilder() {
+  const steps = ['cpu', 'motherboard', 'ram', 'gpu', 'storage', 'psu', 'case'];
+  
+  steps.forEach(step => {
+    const container = document.getElementById(`builder-${step}-options`);
+    if (!container) return;
 
-  let i = 0;
-  const interval = setInterval(() => {
-    if (i < logs.length) {
-      const p = document.createElement('p');
-      p.textContent = logs[i];
-      overlay.appendChild(p);
-      i++;
+    const options = products.filter(p => p.subCategory === step && p.stock > 0);
+    
+    if (options.length === 0) {
+      container.innerHTML = `<p class="empty-msg">No hay ${step} disponibles en este momento.</p>`;
     } else {
-      clearInterval(interval);
-      setTimeout(() => {
-        document.documentElement.innerHTML = '<!-- SYSTEM PURGED -->';
-        window.location.href = 'about:blank';
-      }, 1000);
+      container.innerHTML = options.map(p => `
+        <div class="option-card" onclick="selectBuilderItem('${step}', '${p.id}')" data-id="${p.id}">
+          <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null; this.src='${p.localImage}';">
+          <div class="option-info">
+            <h4>${p.name}</h4>
+            <div class="option-price">$${p.price.toFixed(2)}</div>
+          </div>
+        </div>
+      `).join('');
     }
-  }, 400);
+  });
+
+  updateBuilderSummary();
+}
+
+function selectBuilderItem(step, productId) {
+  const p = products.find(pr => pr.id === productId);
+  if (!p) return;
+
+  // Toggle selection
+  if (builderSelections[step] === p.id) {
+    builderSelections[step] = null;
+  } else {
+    builderSelections[step] = p.id;
+  }
+
+  // Update UI classes
+  const stepContainer = document.getElementById(`builder-${step}-options`);
+  if (stepContainer) {
+    stepContainer.querySelectorAll('.option-card').forEach(card => {
+      card.classList.toggle('selected', card.dataset.id === builderSelections[step]);
+    });
+  }
+
+  updateBuilderSummary();
+  
+  // Track: Select Component
+  trackEvent('select_component', {
+    step: step,
+    item_id: p.id,
+    item_name: p.name
+  });
+}
+
+function updateBuilderSummary() {
+  const summaryList = document.getElementById('builder-summary-items');
+  const totalPriceEl = document.getElementById('builder-total-price');
+  const casheaEl = document.getElementById('builder-cashea-quote');
+  
+  let total = 0;
+  let selectedItems = [];
+
+  for (const step in builderSelections) {
+    const id = builderSelections[step];
+    if (id) {
+      const p = products.find(pr => pr.id === id);
+      if (p) {
+        total += p.price;
+        selectedItems.push(p);
+      }
+    }
+  }
+
+  if (selectedItems.length === 0) {
+    summaryList.innerHTML = '<p class="empty-msg">No has seleccionado componentes aún.</p>';
+  } else {
+    summaryList.innerHTML = selectedItems.map(p => `
+      <div class="summary-item">
+        <span class="item-name">${p.name}</span>
+        <span class="item-price">$${p.price.toFixed(2)}</span>
+      </div>
+    `).join('');
+  }
+
+  totalPriceEl.textContent = `$${total.toFixed(2)}`;
+  
+  // Cashea calculation for builder (40% down payment)
+  if (total > 0) {
+    const initial = (total * 0.4).toFixed(2);
+    casheaEl.textContent = `Inicial desde $${initial} (con Cashea)`;
+  } else {
+    casheaEl.textContent = 'Inicial desde $0.00';
+  }
+
+  updateGamaMeter(selectedItems);
+}
+
+function updateGamaMeter(selectedItems) {
+  const fill = document.getElementById('gama-fill');
+  const text = document.getElementById('gama-text');
+  if (!fill || !text) return;
+
+  let score = 0;
+  const cpu = selectedItems.find(p => p.subCategory === 'cpu');
+  const gpu = selectedItems.find(p => p.subCategory === 'gpu');
+
+  if (cpu) {
+    const name = cpu.name.toLowerCase();
+    if (name.includes('i7') || name.includes('i9') || name.includes('ryzen 7') || name.includes('ryzen 9')) score += 50;
+    else if (name.includes('i5') || name.includes('ryzen 5')) score += 30;
+    else score += 15;
+  }
+
+  if (gpu) {
+    const name = gpu.name.toLowerCase();
+    if (name.includes('rtx 40') || name.includes('rtx 3080') || name.includes('rx 7')) score += 50;
+    else if (name.includes('rtx') || name.includes('gtx 1660') || name.includes('rx 6600')) score += 35;
+    else score += 20;
+  } else if (cpu) {
+    // Integrated graphics
+    score += 5;
+  }
+
+  fill.style.width = `${score}%`;
+  
+  if (score >= 80) text.textContent = 'Gama ALTA';
+  else if (score >= 40) text.textContent = 'Gama MEDIA';
+  else if (score > 0) text.textContent = 'Gama BAJA';
+  else text.textContent = 'Pendiente';
+}
+
+function checkoutBuilder() {
+  let selectedItems = [];
+  let total = 0;
+
+  for (const step in builderSelections) {
+    const id = builderSelections[step];
+    if (id) {
+      const p = products.find(pr => pr.id === id);
+      if (p) {
+        selectedItems.push(p);
+        total += p.price;
+      }
+    }
+  }
+
+  if (selectedItems.length === 0) {
+    showToast('⚠️ Selecciona al menos un componente');
+    return;
+  }
+
+  let message = '🛠️ *Presupuesto de PC Personalizada*\n\n';
+  selectedItems.forEach(p => {
+    message += `• ${p.name} — $${p.price.toFixed(2)}\n`;
+  });
+  message += `\n💰 *Total Estimado: $${total.toFixed(2)} USD*`;
+  message += `\n📊 *Gama Estimada: ${document.getElementById('gama-text').textContent}*`;
+  message += '\n\n¡Hola! Me gustaría consultar disponibilidad para armar esta PC. 🙂';
+
+  const encoded = encodeURIComponent(message);
+  window.open(`https://wa.me/584245339698?text=${encoded}`, '_blank');
+
+  // Track
+  trackEvent('builder_checkout', {
+    value: total,
+    item_count: selectedItems.length
+  });
 }
