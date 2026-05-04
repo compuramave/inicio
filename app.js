@@ -89,8 +89,8 @@ async function loadProductsFromSheet() {
       const isPeripheral = titleLower.includes('mouse') || titleLower.includes('teclado') || titleLower.includes('keyboard') || titleLower.includes('audifono') || titleLower.includes('headset') || titleLower.includes('corneta') || titleLower.includes('bocina') || titleLower.includes('parlante');
       
       // Super Robust detection (to avoid classifying laptops/PCs as CPUs)
-      const laptopKeywords = ['laptop', 'portatil', 'notebook', 'vivobook', 'ideapad', 'slim', 'thinkpad', 'latitude', 'probook', 'surface', 'inspiron', 'zenbook', 'macbook', 'chromebook', 'elitebook', 'spectre', 'omen', 'victus', 'alienware', 'tuf dash', 'zephyrus', 'vostro', 'yoga', 'legion', 'pavilion', 'envy'];
-      const systemBrands = ['hp', 'dell', 'lenovo', 'acer', 'apple', 'gateway'];
+      const laptopKeywords = ['laptop', 'portatil', 'notebook', 'vivobook', 'ideapad', 'slim', 'thinkpad', 'latitude', 'probook', 'surface', 'inspiron', 'zenbook', 'macbook', 'chromebook', 'elitebook', 'spectre', 'omen', 'victus', 'alienware', 'tuf dash', 'zephyrus', 'vostro', 'yoga', 'legion', 'pavilion', 'envy', 'nexxus'];
+      const systemBrands = ['hp', 'dell', 'lenovo', 'acer', 'apple', 'gateway', 'nexxus'];
       const screenSizes = ['11.6', '12.4', '13.3', '14"', '15.6', '16"', '17.3'];
       
       const hasSystemBrand = systemBrands.some(brand => titleLower.startsWith(brand + ' ') || titleLower.includes(' ' + brand + ' '));
@@ -124,10 +124,10 @@ async function loadProductsFromSheet() {
         category = 'sillas';
       } else if (titleLower.includes('nevera') || titleLower.includes('refrigerador') || titleLower.includes('cocina') || titleLower.includes('lavadora') || titleLower.includes('licuadora') || titleLower.includes('batidora') || titleLower.includes('microondas') || titleLower.includes('freidora') || titleLower.includes('air fryer') || titleLower.includes('cafetera') || titleLower.includes('ventilador') || titleLower.includes('aire acondicionado') || titleLower.includes('congelador') || titleLower.includes('tostadora') || titleLower.includes('sanduchera') || titleLower.includes('picatodo') || titleLower.includes('extractor') || titleLower.includes('electrodomestico')) {
         category = 'electrodomesticos';
-      } else if (!isLaptop && !isFullPC && (titleLower.includes('procesador') || titleLower.includes('intel core') || titleLower.includes('ryzen') || titleLower.includes('motherboard') || titleLower.includes('tarjeta madre') || titleLower.includes('memoria ram') || titleLower.includes('tarjeta de video') || titleLower.includes('gtx') || titleLower.includes('rtx') || titleLower.includes('radeon rx') || titleLower.includes('fuente de poder') || titleLower.includes('power supply') || titleLower.includes('case gamer') || titleLower.includes('chasis') || titleLower.includes('disco duro') || titleLower.includes('grafica') || titleLower.includes('vga'))) {
+      } else if (!isLaptop && !isFullPC && (titleLower.includes('procesador') || titleLower.includes('intel core') || titleLower.includes('ryzen') || titleLower.includes('athlon') || titleLower.includes('pentium') || titleLower.includes('celeron') || titleLower.includes('motherboard') || titleLower.includes('tarjeta madre') || titleLower.includes('memoria ram') || titleLower.includes('tarjeta de video') || titleLower.includes('gtx') || titleLower.includes('rtx') || titleLower.includes('gt ') || titleLower.includes('geforce') || titleLower.includes('nvidia') || titleLower.includes('radeon rx') || titleLower.includes('fuente de poder') || titleLower.includes('power supply') || titleLower.includes('case gamer') || titleLower.includes('chasis') || titleLower.includes('disco duro') || titleLower.includes('ssd') || titleLower.includes('nvme') || titleLower.includes('m.2') || titleLower.includes('grafica') || titleLower.includes('vga'))) {
         // Strict component check: only if it contains specific component keywords AND is not a laptop/PC
         category = 'componentes';
-      } else if (titleLower.includes('microfono') || titleLower.includes('roku') || titleLower.includes('fire tv') || titleLower.includes('dualshock') || titleLower.includes('ps4') || titleLower.includes('microsd') || titleLower.includes('micro sd') || titleLower.includes('ssd') || titleLower.includes('kingston') || titleLower.includes('dahua') || titleLower.includes('control ps')) {
+      } else if (titleLower.includes('microfono') || titleLower.includes('roku') || titleLower.includes('fire tv') || titleLower.includes('dualshock') || titleLower.includes('ps4') || titleLower.includes('microsd') || titleLower.includes('micro sd') || titleLower.includes('kingston') || titleLower.includes('dahua') || titleLower.includes('control ps')) {
         category = 'accesorios';
       }
 
@@ -137,7 +137,7 @@ async function loadProductsFromSheet() {
         if (titleLower.includes('procesador') || titleLower.includes('intel core') || titleLower.includes('ryzen') || titleLower.includes('athlon')) subCategory = 'cpu';
         else if (titleLower.includes('motherboard') || titleLower.includes('tarjeta madre')) subCategory = 'motherboard';
         else if (titleLower.includes('ram')) subCategory = 'ram';
-        else if (titleLower.includes('video') || titleLower.includes('gtx') || titleLower.includes('rtx') || titleLower.includes('radeon rx') || titleLower.includes('grafica') || titleLower.includes('vga')) subCategory = 'gpu';
+        else if (titleLower.includes('video') || titleLower.includes('gtx') || titleLower.includes('rtx') || titleLower.includes('gt ') || titleLower.includes('geforce') || titleLower.includes('nvidia') || titleLower.includes('radeon rx') || titleLower.includes('rx ') || titleLower.includes('grafica') || titleLower.includes('vga')) subCategory = 'gpu';
         else if (titleLower.includes('ssd') || titleLower.includes('disco duro') || titleLower.includes('nvme') || titleLower.includes('m.2')) subCategory = 'storage';
         else if (titleLower.includes('fuente') || titleLower.includes('power supply') || titleLower.includes('psu')) subCategory = 'psu';
         else if (titleLower.includes('case') || titleLower.includes('chasis') || titleLower.includes('gabinete')) subCategory = 'case';
@@ -534,7 +534,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateFlashTimer();
   setInterval(updateFlashTimer, 1000);
 
-
+  // Initial routing check
+  handleRouting();
+});
 
 // ===== SPA ROUTING =====
 function handleRouting() {
