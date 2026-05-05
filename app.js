@@ -1408,6 +1408,7 @@ function scrollToSection(sectionId) {
 
 // ===== PC BUILDER LOGIC =====
 let builderSelections = {
+  prebuilt: null,
   cpu: null,
   motherboard: null,
   ram: null,
@@ -1418,16 +1419,21 @@ let builderSelections = {
 };
 
 function setupPCBuilder() {
-  const steps = ['cpu', 'motherboard', 'ram', 'gpu', 'storage', 'psu', 'case'];
+  const steps = ['prebuilt', 'cpu', 'motherboard', 'ram', 'gpu', 'storage', 'psu', 'case'];
   
   steps.forEach(step => {
     const container = document.getElementById(`builder-${step}-options`);
     if (!container) return;
 
-    const options = products.filter(p => p.subCategory === step && p.stock > 0);
+    let options;
+    if (step === 'prebuilt') {
+      options = products.filter(p => p.category === 'pc' && p.stock > 0);
+    } else {
+      options = products.filter(p => p.subCategory === step && p.stock > 0);
+    }
     
     if (options.length === 0) {
-      container.innerHTML = `<p class="empty-msg">No hay ${step} disponibles en este momento.</p>`;
+      container.innerHTML = `<p class="empty-msg">No hay ${step === 'prebuilt' ? 'PCs pre-armadas' : step} disponibles en este momento.</p>`;
     } else {
       container.innerHTML = options.map(p => `
         <div class="option-card" onclick="selectBuilderItem('${step}', '${p.id}')" data-id="${p.id}">
@@ -1452,16 +1458,26 @@ function selectBuilderItem(step, productId) {
   if (builderSelections[step] === p.id) {
     builderSelections[step] = null;
   } else {
+    // If selecting a prebuilt, clear everything else
+    if (step === 'prebuilt') {
+      for (let key in builderSelections) builderSelections[key] = null;
+    } else {
+      // If selecting a component, clear prebuilt
+      builderSelections.prebuilt = null;
+    }
     builderSelections[step] = p.id;
   }
 
-  // Update UI classes
-  const stepContainer = document.getElementById(`builder-${step}-options`);
-  if (stepContainer) {
-    stepContainer.querySelectorAll('.option-card').forEach(card => {
-      card.classList.toggle('selected', card.dataset.id === builderSelections[step]);
-    });
-  }
+  // Update UI classes (all sections)
+  const steps = ['prebuilt', 'cpu', 'motherboard', 'ram', 'gpu', 'storage', 'psu', 'case'];
+  steps.forEach(s => {
+    const stepContainer = document.getElementById(`builder-${s}-options`);
+    if (stepContainer) {
+      stepContainer.querySelectorAll('.option-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.id === builderSelections[s]);
+      });
+    }
+  });
 
   updateBuilderSummary();
   
@@ -1512,43 +1528,8 @@ function updateBuilderSummary() {
   } else {
     casheaEl.textContent = 'Inicial desde $0.00';
   }
-
-  updateGamaMeter(selectedItems);
 }
 
-function updateGamaMeter(selectedItems) {
-  const fill = document.getElementById('gama-fill');
-  const text = document.getElementById('gama-text');
-  if (!fill || !text) return;
-
-  let score = 0;
-  const cpu = selectedItems.find(p => p.subCategory === 'cpu');
-  const gpu = selectedItems.find(p => p.subCategory === 'gpu');
-
-  if (cpu) {
-    const name = cpu.name.toLowerCase();
-    if (name.includes('i7') || name.includes('i9') || name.includes('ryzen 7') || name.includes('ryzen 9')) score += 50;
-    else if (name.includes('i5') || name.includes('ryzen 5')) score += 30;
-    else score += 15;
-  }
-
-  if (gpu) {
-    const name = gpu.name.toLowerCase();
-    if (name.includes('rtx 40') || name.includes('rtx 3080') || name.includes('rx 7')) score += 50;
-    else if (name.includes('rtx') || name.includes('gtx 1660') || name.includes('rx 6600')) score += 35;
-    else score += 20;
-  } else if (cpu) {
-    // Integrated graphics
-    score += 5;
-  }
-
-  fill.style.width = `${score}%`;
-  
-  if (score >= 80) text.textContent = 'Gama ALTA';
-  else if (score >= 40) text.textContent = 'Gama MEDIA';
-  else if (score > 0) text.textContent = 'Gama BAJA';
-  else text.textContent = 'Pendiente';
-}
 
 function checkoutBuilder() {
   let selectedItems = [];
@@ -1570,13 +1551,12 @@ function checkoutBuilder() {
     return;
   }
 
-  let message = '🛠️ *Presupuesto de PC Personalizada*\n\n';
+  let message = builderSelections.prebuilt ? '📦 *Consulta de PC Pre-armada*\n\n' : '🛠️ *Presupuesto de PC Personalizada*\n\n';
   selectedItems.forEach(p => {
     message += `• ${p.name} — $${p.price.toFixed(2)}\n`;
   });
   message += `\n💰 *Total Estimado: $${total.toFixed(2)} USD*`;
-  message += `\n📊 *Gama Estimada: ${document.getElementById('gama-text').textContent}*`;
-  message += '\n\n¡Hola! Me gustaría consultar disponibilidad para armar esta PC. 🙂';
+  message += '\n\n¡Hola! Me gustaría consultar disponibilidad para este equipo. 🙂';
 
   const encoded = encodeURIComponent(message);
   window.open(`https://wa.me/584245339698?text=${encoded}`, '_blank');
