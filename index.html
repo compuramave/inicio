@@ -196,7 +196,7 @@
         <a href="#inicio" class="active">Inicio</a>
         <a href="#categorias">Categorías</a>
         <a href="#pc-builder">Arma tu PC</a>
-        <a href="#refurbished" class="nav-ofertas">🔥 Ofertas</a>
+        <a href="#cat-refurbished" class="nav-ofertas" onclick="trackEvent('click_ofertas')">🔥 Ofertas</a>
         <a href="#cashea">Cashea</a>
         <a href="#nosotros">Nosotros</a>
         <a href="#contacto">Contacto</a>
@@ -320,22 +320,16 @@
       </div>
     </section>
 
-    <!-- ===== BESTSELLERS CAROUSEL ===== -->
-    <section class="bestsellers" id="destacados">
+    <!-- ===== FEED PRINCIPAL (SOPA DE PRODUCTOS) ===== -->
+    <section class="products" id="feed-principal">
       <div class="container">
         <div class="section-header reveal">
           <div class="section-tag">⭐ Lo Más Vendido</div>
-          <h2>Productos Destacados</h2>
-          <p>Los equipos favoritos de la semana</p>
+          <h2>Los Favoritos de Compurama</h2>
+          <p>Descubre los equipos más buscados y recomendados</p>
         </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" id="bestsellers-track">
-              <!-- Products injected by JS -->
-            </div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
+        <div class="products-grid" id="home-feed-grid">
+          <!-- Products injected by JS -->
         </div>
       </div>
     </section>
@@ -456,310 +450,6 @@
       </div>
     </section>
 
-    </section>
-
-    <!-- ===== REFURBISHED / OFERTAS ===== -->
-    <section class="products refurbished-section" id="refurbished">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag refurbished-tag">🔥 Ofertas Especiales</div>
-          <h2>Laptops <span class="gradient-text-refurb">Reacondicionadas</span></h2>
-          <p>Equipos empresariales certificados a precios imbatibles — ¡Con garantía Compurama!</p>
-        </div>
-
-        <div class="flash-sale-timer reveal">
-          <div class="flash-sale-badge">⚡ Ofertas Flash</div>
-          <div class="flash-sale-text">
-            <span>¡Consigue las ofertas más TOP del momento! Terminan en:</span>
-          </div>
-          <div class="countdown" id="flash-countdown">
-            <div class="countdown-item"><span id="cd-hours">10</span><small>Horas</small></div>
-            <div class="countdown-item"><span id="cd-minutes">49</span><small>Minutos</small></div>
-            <div class="countdown-item"><span id="cd-seconds">21</span><small>Segundos</small></div>
-          </div>
-        </div>
-
-        <div class="refurbished-banner reveal">
-          <div class="refurbished-banner-content">
-            <div class="refurbished-banner-icon">💎</div>
-            <div class="refurbished-banner-text">
-              <h3>¿Por qué elegir Refurbished?</h3>
-              <div class="refurbished-benefits">
-                <span>✅ Hasta 60% menos que equipos nuevos</span>
-                <span>✅ Certificados y probados</span>
-                <span>✅ Garantía Compurama incluida</span>
-                <span>✅ Calidad empresarial premium</span>
-              </div>
-            </div>
-          </div>
-          <div class="refurbished-banner-badge">
-            <span class="refurbished-discount">AHORRA</span>
-            <span class="refurbished-percent">HASTA 60%</span>
-          </div>
-        </div>
-
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todas</button>
-            <button class="filter-btn" data-filter="dell">Dell</button>
-            <button class="filter-btn" data-filter="hp">HP</button>
-            <button class="filter-btn" data-filter="lenovo">Lenovo</button>
-            <button class="filter-btn" data-filter="microsoft">Microsoft</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="refurbished"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== LAPTOPS ===== -->
-    <section class="products" id="laptops">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag">💻 Laptops</div>
-          <h2>Nuestras Laptops</h2>
-          <p>Las mejores marcas con garantía y soporte técnico</p>
-        </div>
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todas</button>
-            <button class="filter-btn" data-filter="hp">HP</button>
-            <button class="filter-btn" data-filter="dell">Dell</button>
-            <button class="filter-btn" data-filter="asus">Asus</button>
-            <button class="filter-btn" data-filter="lenovo">Lenovo</button>
-            <button class="filter-btn" data-filter="microsoft">Microsoft</button>
-            <button class="filter-btn" data-filter="nexxus">Nexxus</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="laptops"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== ESPACIO PUBLICITARIO 2 ===== -->
-    <section class="ad-banner-section">
-      <div class="container">
-        <span class="ad-label">Publicidad</span>
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1525892082687811"
-          data-ad-slot="TU_CODIGO_AQUI" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-      </div>
-    </section>
-
-    <!-- ===== PCS ===== -->
-    <section class="products products-dark" id="pc">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag">🖥️ Computadoras</div>
-          <h2>PCs de Escritorio</h2>
-          <p>Potencia y productividad para tu espacio de trabajo</p>
-        </div>
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todas</button>
-            <button class="filter-btn" data-filter="hp">HP</button>
-            <button class="filter-btn" data-filter="dell">Dell</button>
-            <button class="filter-btn" data-filter="astron">Astron</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="pc"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== PRINTERS ===== -->
-    <section class="products" id="impresoras">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag">🖨️ Impresoras</div>
-          <h2>Impresoras y Multifuncionales</h2>
-          <p>Soluciones de impresión para el hogar y la oficina</p>
-        </div>
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todas</button>
-            <button class="filter-btn" data-filter="epson">Epson</button>
-            <button class="filter-btn" data-filter="hp">HP</button>
-            <button class="filter-btn" data-filter="canon">Canon</button>
-            <button class="filter-btn" data-filter="xerox">Xerox</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="impresoras"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== ROUTERS ===== -->
-    <section class="products products-dark" id="routers">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag">📡 Routers</div>
-          <h2>Routers y Conectividad</h2>
-          <p>Lleva tu conexión al siguiente nivel con routers de alto rendimiento</p>
-        </div>
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="mercusys">Mercusys</button>
-            <button class="filter-btn" data-filter="tp-link">TP-Link</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="routers"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== COMPONENTES ===== -->
-    <section class="products" id="componentes">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag">🔌 Componentes</div>
-          <h2>Hardware y Repuestos</h2>
-          <p>Encuentra piezas individuales y componentes para repotenciar tu equipo.</p>
-        </div>
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="intel">Intel</button>
-            <button class="filter-btn" data-filter="amd">AMD</button>
-            <button class="filter-btn" data-filter="asus">Asus</button>
-            <button class="filter-btn" data-filter="msi">MSI</button>
-            <button class="filter-btn" data-filter="kingston">Kingston</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="componentes"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== TABLETS ===== -->
-    <section class="products" id="tablets">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag">📱 Tablets</div>
-          <h2>Tablets y iPads</h2>
-          <p>Potencia y portabilidad en tus manos</p>
-        </div>
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todas</button>
-            <button class="filter-btn" data-filter="chuwi">Chuwi</button>
-            <button class="filter-btn" data-filter="dialn">Dialn</button>
-            <button class="filter-btn" data-filter="apple">Apple</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="tablets"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== MINI UPS ===== -->
-    <section class="products products-dark" id="ups">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag">🔋 Mini UPS</div>
-          <h2>Sistemas de Respaldo</h2>
-          <p>Tu internet siempre encendido, incluso sin electricidad</p>
-        </div>
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="marsriva">Marsriva</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="ups"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== MONITORES ===== -->
-    <section class="products" id="monitores">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag">🖥️ Monitores</div>
-          <h2>Monitores y Pantallas</h2>
-          <p>Amplía tu visión con la mejor resolución y tasa de refresco</p>
-        </div>
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="spidertec">Spidertec</button>
-            <button class="filter-btn" data-filter="xiaomi">Xiaomi</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="monitores"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== ACCESORIOS ===== -->
-    <section class="products products-dark" id="accesorios">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-tag">🎧 Accesorios</div>
-          <h2>Accesorios y Periféricos</h2>
-          <p>El complemento ideal para tu ecosistema tecnológico</p>
-        </div>
-        <div class="products-toolbar reveal">
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-          </div>
-        </div>
-        <div class="carousel-container reveal">
-          <button class="carousel-btn prev-btn" aria-label="Anterior">⟨</button>
-          <div class="carousel-track-wrapper">
-            <div class="carousel-track" data-section="accesorios"></div>
-          </div>
-          <button class="carousel-btn next-btn" aria-label="Siguiente">⟩</button>
-        </div>
-      </div>
     </section>
 
     <!-- ===== CASHEA SECTION ===== -->
@@ -1058,7 +748,50 @@
 
     </div><!-- End #view-main -->
 
-    <!-- ===== VIEW: PC BUILDER (SPA) ===== -->
+        <!-- ===== VIEW: CATEGORY (SPA) ===== -->
+    <div id="view-category" style="display: none; padding-bottom: 100px; min-height: 80vh; background: var(--gray-100);">
+      <section class="products" style="padding-top: 100px;">
+        <div class="container">
+          <div class="builder-nav-header" style="margin-bottom: 20px;">
+            <button class="btn btn-outline" onclick="window.location.hash = ''" style="color: var(--primary); border-color: var(--gray-300);">
+              â† Volver al Inicio
+            </button>
+          </div>
+          <div class="section-header reveal">
+            <div class="section-tag" id="cat-view-tag">ðŸ“‚ CategorÃ­a</div>
+            <h2 id="cat-view-title">Cargando...</h2>
+            <p id="cat-view-desc"></p>
+          </div>
+          <div class="products-toolbar reveal" id="cat-view-toolbar" style="display:none;">
+             <!-- Filters injected by JS -->
+          </div>
+          <div class="products-grid" id="cat-view-grid">
+             <!-- Products injected by JS -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== VIEW: SEARCH (SPA) ===== -->
+    <div id="view-search" style="display: none; padding-bottom: 100px; min-height: 80vh; background: var(--gray-100);">
+      <section class="products" style="padding-top: 100px;">
+        <div class="container">
+          <div class="builder-nav-header" style="margin-bottom: 20px;">
+            <button class="btn btn-outline" onclick="window.location.hash = ''" style="color: var(--primary); border-color: var(--gray-300);">
+              â† Volver al Inicio
+            </button>
+          </div>
+          <div class="section-header reveal">
+            <div class="section-tag">ðŸ” BÃºsqueda</div>
+            <h2 id="search-view-title">Resultados de bÃºsqueda</h2>
+          </div>
+          <div class="products-grid" id="search-view-grid">
+             <!-- Products injected by JS -->
+          </div>
+        </div>
+      </section>
+    </div>
+<!-- ===== VIEW: PC BUILDER (SPA) ===== -->
     <div id="view-builder" style="display: none; padding-top: 100px; padding-bottom: 100px; min-height: 80vh; background: var(--gray-100);">
       <div class="container">
         <div class="builder-nav-header" style="margin-bottom: 40px;">

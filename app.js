@@ -558,21 +558,36 @@ function handleRouting() {
   const hash = window.location.hash || '#inicio';
   const mainView = document.getElementById('view-main');
   const builderView = document.getElementById('view-builder');
+  const categoryView = document.getElementById('view-category');
+  const searchView = document.getElementById('view-search');
 
-  if (!mainView || !builderView) return;
+  if (!mainView || !builderView || !categoryView || !searchView) return;
+
+  // Hide all views initially
+  mainView.style.display = 'none';
+  builderView.style.display = 'none';
+  categoryView.style.display = 'none';
+  searchView.style.display = 'none';
+
+  window.scrollTo(0, 0);
 
   if (hash === '#pc-builder') {
-    mainView.style.display = 'none';
     builderView.style.display = 'block';
     setupPCBuilder();
-    window.scrollTo(0, 0);
     trackSectionView('pc-builder');
+  } else if (hash === '#search') {
+    searchView.style.display = 'block';
+    trackSectionView('search');
+  } else if (hash.startsWith('#cat-')) {
+    categoryView.style.display = 'block';
+    const category = hash.replace('#cat-', '');
+    renderCategoryPage(category);
+    trackSectionView(category);
   } else {
+    // Default to main view (home)
     mainView.style.display = 'block';
-    builderView.style.display = 'none';
     
-    // If it's a section hash, scroll to it
-    if (hash && hash !== '#inicio') {
+    if (hash && hash !== '#inicio' && hash !== '#') {
       const targetId = hash.replace('#', '');
       const target = document.getElementById(targetId);
       if (target) {
@@ -1113,13 +1128,10 @@ function selectSearchItem(id) {
 }
 
 function performSearch(q) {
-  if (!q) {
-    renderProducts('all');
-    return;
-  }
+  const bar = $('.search-bar');
+  if (bar) bar.classList.remove('open');
 
-  // Track search, now including results check
-  // (We move the event call after filtering to count results)
+  if (!q) return;
 
   const filtered = products.filter(p =>
     p.name.toLowerCase().includes(q) ||
@@ -1127,19 +1139,18 @@ function performSearch(q) {
     p.description.toLowerCase().includes(q)
   );
 
-  let firstFoundSection = null;
+  const grid = document.getElementById('search-view-grid');
+  const titleEl = document.getElementById('search-view-title');
 
-  // Search renders all sections (overrides lazy rendering)
-  $$('.carousel-track[data-section]').forEach(grid => {
-    const section = grid.dataset.section;
-    const items = section ? filtered.filter(p => p.category === section) : filtered;
-    grid.innerHTML = items.map(p => createProductCard(p)).join('');
-    
-    if (items.length > 0 && !firstFoundSection) {
-      firstFoundSection = section;
-    }
-    setupScrollReveal();
-  });
+  if (!grid || !titleEl) return;
+
+  titleEl.textContent = `Resultados para "${q}"`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--gray-500);">❌ No se encontraron resultados para "${q}"</div>`;
+  } else {
+    grid.innerHTML = filtered.map(p => createProductCard(p)).join('');
+  }
 
   // Track: Search with results count
   trackEvent('search', { 
@@ -1147,12 +1158,8 @@ function performSearch(q) {
     results_count: filtered.length
   });
 
-  if (firstFoundSection) {
-    scrollToSection(firstFoundSection);
-    showToast(`🔍 Mostrando resultados para "${q}"`);
-  } else {
-    showToast(`❌ No se encontraron resultados para "${q}"`);
-  }
+  window.location.hash = 'search';
+  setupScrollReveal();
 }
 
 function createProductCard(p) {
@@ -1245,41 +1252,42 @@ function setupScrollReveal() {
   $$('.reveal:not(.visible)').forEach(el => observer.observe(el));
 }
 
-// ===== BESTSELLERS CAROUSEL =====
+// ===== FEED PRINCIPAL =====
 function setupBestsellersCarousel() {
-  const track = document.getElementById('bestsellers-track');
+  const track = document.getElementById('home-feed-grid');
   if (!track) return;
 
-  // Lógica para semilla semanal (cambia cada domingo a la medianoche)
+  const keywords = ['epson', 'l1250', 'l3250', 'microfono', 'tx', 'xtrike', 'mercusys', 'ac12', 'tp-link', 'switch', 'rj45', 'ups', 'marsriva', 'cdp', 'proyector', 'magcubic', 'nexxus', 'havit', 'delux', 'dahua', 'ssd'];
+
+  // Score products based on keywords and stock
+  let scoredProducts = products.map(p => {
+    let score = 0;
+    if (p.stock > 0) {
+      score += 10;
+      const text = (p.name + ' ' + p.brand + ' ' + p.category).toLowerCase();
+      keywords.forEach(kw => {
+        if (text.includes(kw)) score += 5;
+      });
+      // Slight boost for some categories
+      if (['impresoras', 'routers', 'ups'].includes(p.category)) score += 2;
+    }
+    return { ...p, score };
+  });
+
+  // Sort by score (descending), then fallback to random seed to shuffle equally scored items
   const now = new Date();
-  const startOfYear = new Date(now.getFullYear(), 0, 1);
-  const days = Math.floor((now - startOfYear) / (24 * 60 * 60 * 1000));
-  const weekNumber = Math.ceil(days / 7);
-  const seed = now.getFullYear() * 100 + weekNumber;
-
-  // PRNG simple
-  function pseudoRandom(seed) {
-    let value = seed;
-    return function () {
-      value = (value * 9301 + 49297) % 233280;
-      return value / 233280;
-    };
-  }
-
+  const seed = now.getFullYear() * 100 + Math.ceil(Math.floor((now - new Date(now.getFullYear(), 0, 1)) / (24 * 60 * 60 * 1000)) / 7);
+  function pseudoRandom(s) { let v = s; return () => { v = (v * 9301 + 49297) % 233280; return v / 233280; }; }
   const random = pseudoRandom(seed);
 
-  // Copia de productos para mezclar
-  let shuffled = [...products];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
+  let sorted = scoredProducts.filter(p => p.score > 0).sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return random() - 0.5;
+  });
 
-  // Tomar 6 productos para el carrusel
-  const bestsellers = shuffled.slice(0, 6);
-
-  // Renderizar
-  track.innerHTML = bestsellers.map(p => createProductCard(p)).join('');
+  // Render top 24 for the home feed
+  const feedItems = sorted.slice(0, 24);
+  track.innerHTML = feedItems.map(p => createProductCard(p)).join('');
 }
 
 // ===== ALL CAROUSELS LOGIC =====
@@ -1394,8 +1402,22 @@ function checkout() {
 
 // ===== CATEGORY NAV =====
 function scrollToSection(sectionId) {
+  const validCategories = ['refurbished', 'laptops', 'componentes', 'pc', 'impresoras', 'routers', 'monitores', 'audio', 'mouses', 'teclados', 'proyectores', 'tablets', 'ups', 'accesorios', 'sillas', 'electrodomesticos'];
+  
+  if (validCategories.includes(sectionId)) {
+    window.location.hash = 'cat-' + sectionId;
+    return;
+  }
+
   const el = document.getElementById(sectionId);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  if (el) {
+    if (window.location.hash && window.location.hash !== '#inicio' && window.location.hash !== '#') {
+      window.location.hash = 'inicio';
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
+    } else {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   // Track Virtual Page View
   trackSectionView(sectionId);
@@ -1566,4 +1588,46 @@ function checkoutBuilder() {
     value: total,
     item_count: selectedItems.length
   });
+}
+
+// ===== RENDER CATEGORY PAGE =====
+function renderCategoryPage(category) {
+  const titleEl = document.getElementById('cat-view-title');
+  const descEl = document.getElementById('cat-view-desc');
+  const grid = document.getElementById('cat-view-grid');
+
+  if (!titleEl || !grid) return;
+
+  const titles = {
+    'refurbished': { t: 'Laptops Reacondicionadas', d: 'Equipos empresariales certificados a precios imbatibles.' },
+    'laptops': { t: 'Nuestras Laptops', d: 'Las mejores marcas con garantía y soporte técnico.' },
+    'componentes': { t: 'Hardware y Repuestos', d: 'Encuentra piezas individuales para repotenciar tu equipo.' },
+    'pc': { t: 'PCs de Escritorio', d: 'Potencia y productividad para tu espacio de trabajo.' },
+    'impresoras': { t: 'Impresoras y Multifuncionales', d: 'Soluciones de impresión para el hogar y la oficina.' },
+    'routers': { t: 'Routers y Conectividad', d: 'Lleva tu conexión al siguiente nivel con routers de alto rendimiento.' },
+    'monitores': { t: 'Monitores y Pantallas', d: 'Amplía tu visión con la mejor resolución.' },
+    'audio': { t: 'Sonido y Audífonos', d: 'Vive la mejor experiencia sonora.' },
+    'mouses': { t: 'Mouses y Punteros', d: 'Precisión en cada movimiento.' },
+    'teclados': { t: 'Teclados y Gamers', d: 'Domina el juego con rapidez.' },
+    'proyectores': { t: 'Cine en Casa', d: 'Tus películas favoritas en pantalla gigante.' },
+    'tablets': { t: 'Tablets y iPads', d: 'Potencia y portabilidad en tus manos.' },
+    'ups': { t: 'Sistemas de Respaldo', d: 'Tu internet siempre encendido, incluso sin electricidad.' },
+    'accesorios': { t: 'Accesorios y Periféricos', d: 'El complemento ideal para tu ecosistema tecnológico.' },
+    'sillas': { t: 'Sillas Gamer y Oficina', d: 'Comodidad para tus largas jornadas.' },
+    'electrodomesticos': { t: 'Hogar y Línea Blanca', d: 'Equipa tu espacio con la mejor tecnología.' }
+  };
+
+  const info = titles[category] || { t: category.toUpperCase(), d: '' };
+  titleEl.textContent = info.t;
+  descEl.textContent = info.d;
+
+  let items = products.filter(p => p.category === category);
+  
+  if (items.length === 0) {
+    grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--gray-500);">No hay productos en esta categoría por el momento.</div>';
+  } else {
+    grid.innerHTML = items.map(p => createProductCard(p)).join('');
+  }
+
+  setupScrollReveal();
 }
