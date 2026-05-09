@@ -1415,6 +1415,7 @@ function checkout() {
   });
   message += `\n💰 *Total: $${total.toFixed(2)} USD*`;
   message += '\n\n¡Hola! Me gustaría realizar este pedido. 🙂';
+  message += '\n\n⭐ *¿Ya nos conoces?* Déjanos tu reseña aquí: https://es.trustpilot.com/review/compuramave.github.io';
 
   const encoded = encodeURIComponent(message);
   window.open(`https://wa.me/584245339698?text=${encoded}`, '_blank');
@@ -1606,6 +1607,7 @@ function checkoutBuilder() {
   });
   message += `\n💰 *Total Estimado: $${total.toFixed(2)} USD*`;
   message += '\n\n¡Hola! Me gustaría consultar disponibilidad para este equipo. 🙂';
+  message += '\n\n⭐ *¿Ya nos conoces?* Déjanos tu reseña aquí: https://es.trustpilot.com/review/compuramave.github.io';
 
   const encoded = encodeURIComponent(message);
   window.open(`https://wa.me/584245339698?text=${encoded}`, '_blank');
