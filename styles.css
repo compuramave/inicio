@@ -3508,3 +3508,131 @@ ul {
   min-width: 260px;
   flex: 0 0 260px;
 }
+
+/* ===== SUCCESS MODAL ===== */
+.success-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 18, 36, 0.9);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition);
+}
+
+.success-modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.success-modal {
+  background: var(--white);
+  padding: 40px;
+  border-radius: var(--radius-lg);
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  transform: scale(0.9) translateY(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.success-modal-overlay.open .success-modal {
+  transform: scale(1) translateY(0);
+}
+
+.success-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--gray-100);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-modal-close:hover {
+  background: var(--danger);
+  color: var(--white);
+}
+
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.success-modal h2 {
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.success-modal p {
+  color: var(--gray-700);
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+#trustpilot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#trustpilot-form .input-group input {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: 1px solid var(--gray-200);
+  font-size: 0.95rem;
+  outline: none;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+#trustpilot-form .input-group input:focus {
+  border-color: #00b67a;
+  box-shadow: 0 0 0 4px rgba(0, 182, 122, 0.1);
+}
+
+.btn-trustpilot-submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 50px;
+  background: #00b67a;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.btn-trustpilot-submit:hover {
+  background: #00a06b;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 182, 122, 0.3);
+}
+
+.trustpilot-note {
+  font-size: 0.75rem !important;
+  color: var(--gray-500) !important;
+  margin-top: 15px !important;
+  margin-bottom: 0 !important;
+}

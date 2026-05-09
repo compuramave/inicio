@@ -1062,6 +1062,29 @@
       title="Escríbenos por WhatsApp" class="share-wa"><i class="fab fa-whatsapp"></i></a>
   </div>
 
+  <!-- ===== SUCCESS MODAL (Trustpilot Invite) ===== -->
+  <div class="success-modal-overlay" id="success-modal">
+    <div class="success-modal">
+      <button class="success-modal-close" onclick="closeSuccessModal()">&times;</button>
+      <div class="success-icon">✅</div>
+      <h2>¡Pedido Iniciado!</h2>
+      <p>Hemos abierto WhatsApp para procesar tu solicitud. ¿Te gustaría recibir una invitación para calificarnos en <strong>Trustpilot</strong> una vez recibas tu equipo?</p>
+      
+      <form id="trustpilot-form" onsubmit="handleTrustpilotSubmit(event)">
+        <div class="input-group">
+          <input type="text" id="customer-name" placeholder="Tu nombre" required>
+        </div>
+        <div class="input-group" style="margin-top: 10px;">
+          <input type="email" id="customer-email" placeholder="tu@email.com" required>
+        </div>
+        <button type="submit" class="btn-trustpilot-submit">
+          📩 Recibir invitación
+        </button>
+      </form>
+      <p class="trustpilot-note">Tu privacidad es importante. Solo usaremos este correo para la invitación oficial de Trustpilot.</p>
+    </div>
+  </div>
+
   <script src="app.js" defer></script>
 </body>
 

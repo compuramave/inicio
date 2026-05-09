@@ -1419,6 +1419,9 @@ function checkout() {
 
   const encoded = encodeURIComponent(message);
   window.open(`https://wa.me/584245339698?text=${encoded}`, '_blank');
+  
+  // Open Success Modal for Trustpilot capture
+  setTimeout(openSuccessModal, 1000);
 
   // Track: Generate Lead (Checkout)
   trackEvent('generate_lead', {
@@ -1611,6 +1614,9 @@ function checkoutBuilder() {
 
   const encoded = encodeURIComponent(message);
   window.open(`https://wa.me/584245339698?text=${encoded}`, '_blank');
+  
+  // Open Success Modal for Trustpilot capture
+  setTimeout(openSuccessModal, 1000);
 
   // Track
   trackEvent('builder_checkout', {
@@ -1659,4 +1665,38 @@ function renderCategoryPage(category) {
   }
 
   setupScrollReveal();
+}
+
+// ===== SUCCESS MODAL & TRUSTPILOT =====
+function openSuccessModal() {
+  const modal = document.getElementById('success-modal');
+  if (modal) modal.classList.add('open');
+}
+
+function closeSuccessModal() {
+  const modal = document.getElementById('success-modal');
+  if (modal) modal.classList.remove('open');
+}
+
+function handleTrustpilotSubmit(event) {
+  event.preventDefault();
+  const name = document.getElementById('customer-name').value;
+  const email = document.getElementById('customer-email').value;
+  
+  if (typeof tp === 'function') {
+    tp('createInvitation', {
+      recipientEmail: email,
+      recipientName: name,
+      referenceId: 'Order_' + Date.now(),
+      source: 'InvitationScript'
+    });
+    
+    showToast('✅ ¡Gracias! Recibirás tu invitación pronto.');
+    closeSuccessModal();
+    
+    // Clear form
+    event.target.reset();
+  } else {
+    showToast('❌ Error al conectar con Trustpilot.');
+  }
 }
