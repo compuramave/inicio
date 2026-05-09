@@ -811,6 +811,26 @@ function addToCart(productId) {
     price: product.price,
     currency: 'USD'
   });
+
+  // Track: Potential Sale / Lead (Custom business intent)
+  trackEvent('potential_sale', {
+    item_id: product.id,
+    item_name: product.name,
+    value: product.price,
+    currency: 'USD'
+  });
+
+  // Track: Begin Checkout (Standard GA4)
+  trackEvent('begin_checkout', {
+    value: product.price,
+    currency: 'USD',
+    items: [{
+      item_id: product.id,
+      item_name: product.name,
+      price: product.price,
+      quantity: 1
+    }]
+  });
 }
 
 function removeFromCart(productId) {
@@ -1329,6 +1349,7 @@ function setupCarousels() {
 }
 
 // ===== TOAST =====
+let toastTimeout;
 function showToast(message) {
   let toast = $('.toast');
   if (!toast) {
@@ -1336,9 +1357,15 @@ function showToast(message) {
     toast.className = 'toast';
     document.body.appendChild(toast);
   }
+  
+  clearTimeout(toastTimeout);
+  
   toast.textContent = message;
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2500);
+  
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
 }
 
 // ===== FILTER BUTTONS =====
