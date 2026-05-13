@@ -548,10 +548,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       window.history.replaceState({}, document.title, window.location.pathname);
     }, 500);
   }
-  // Refresh Trustpilot widgets after rendering
-  if (window.Trustpilot) {
-    window.Trustpilot.loadFromElement(document.body);
-  }
 
   // Activar temporizador Flash
   updateFlashTimer();
