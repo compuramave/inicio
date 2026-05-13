@@ -3170,27 +3170,29 @@ ul {
 
 /* ===== AD BANNERS ===== */
 .ad-banner-section {
-  padding: 40px 0;
+  padding: 60px 0;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.03);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   overflow: hidden;
+  clear: both;
 }
 
 .ad-label {
   display: block;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   color: var(--gray-500);
   text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-  font-weight: 600;
+  letter-spacing: 2.5px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {
   .ad-banner-section {
-    padding: 20px 0;
+    padding: 40px 0;
   }
 }
 
@@ -3636,3 +3638,4 @@ ul {
   margin-top: 15px !important;
   margin-bottom: 0 !important;
 }
+$styles
