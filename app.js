@@ -1692,15 +1692,29 @@ function handleTrustpilotSubmit(event) {
   const email = document.getElementById('customer-email').value;
   
   if (typeof tp === 'function') {
+    // Map cart products to Trustpilot format
+    const cartProducts = cart.map(item => ({
+      sku: item.id,
+      name: item.name,
+      productUrl: window.location.origin + window.location.pathname + '?product=' + encodeURIComponent(item.id),
+      imageUrl: window.location.origin + window.location.pathname + item.image
+    }));
+
     tp('createInvitation', {
       recipientEmail: email,
       recipientName: name,
       referenceId: 'Order_' + Date.now(),
-      source: 'InvitationScript'
+      source: 'InvitationScript',
+      productSkus: cart.map(item => item.id),
+      products: cartProducts
     });
     
     showToast('✅ ¡Gracias! Recibirás tu invitación pronto.');
     closeSuccessModal();
+    
+    // Clear cart after successful lead capture (optional, but recommended if order started)
+    // cart = [];
+    // updateCartUI();
     
     // Clear form
     event.target.reset();
