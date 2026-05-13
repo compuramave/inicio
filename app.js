@@ -175,6 +175,7 @@ async function loadProductsFromSheet() {
         } else if (cat === 'ups') {
           if (t.includes('kp3')) return 'catalogo/UPS/mini ups marsriva kp3.jpg';
           if (t.includes('kp2')) return 'catalogo/UPS/mini ups marssiva kp2 ec.jpg';
+          if (t.includes('kp6 max')) return 'catalogo/UPS/mini_ups_kp6_max.jpg';
         } else if (cat === 'monitores') {
           if (t.includes('spidertec') && t.includes('19.5')) return 'catalogo/monitores/monitor spidertec 19.5.jpg';
           if (t.includes('spidertec') && t.includes('21.5')) return 'catalogo/monitores/monitor spidertec 21.5.jpg';
@@ -395,6 +396,9 @@ async function loadProductsFromSheet() {
           } else if (titleLower.includes('kp2')) {
             desc = desc || 'Mini UPS Marsriva KP2 EC de 8.000 mAh. Sistema de respaldo inteligente y compacto para dispositivos de red. Durabilidad teórica: entre 4 y 6 horas de energía ininterrumpida.';
             specs.push('Capacidad: 8.000 mAh', 'Salidas DC PoE', 'Autonomía: Hasta 6 horas');
+          } else if (titleLower.includes('kp6 max')) {
+            desc = desc || 'Mini UPS Marsriva KP6 MAX de 20.000 mAh. Potente respaldo de energía para routers, módems y cámaras. Durabilidad superior para largas jornadas sin electricidad.';
+            specs.push('Capacidad: 20.000 mAh', 'Salidas Múltiples', 'Autonomía: Más de 8 horas');
           }
           desc = desc || 'Powerbank / Mini UPS de alta capacidad para mantener el internet activo durante cortes de luz.';
         }
@@ -513,22 +517,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     await loadProductsFromSheet();
-    // === Custom added Mini UPS ===
-    const customMiniUps = {
-      id: '0067-T',
-      name: 'Mini UPS Marsriva KP6 MAX',
-      description: 'Mini UPS Marsriva KP6 MAX 20.000mAh de una duracion de mas de 8 horas en la mayoria de los casos',
-      stock: 4,
-      brand: 'Compurama',
-      image: 'catalogo/UPS/mini_ups_kp6_max.jpg',
-      price: 69.6,
-      category: 'ups',
-      subCategory: null,
-      badge: null,
-      specs: ['Capacidad: 20.000mAh', 'Duración: >8h']
-    };
-    products.push(customMiniUps);
-    // ===============================
   } catch (err) {
     console.error("Critical load error:", err);
   } finally {
