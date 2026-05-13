@@ -513,6 +513,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     await loadProductsFromSheet();
+    // === Custom added Mini UPS ===
+    const customMiniUps = {
+      id: '0067-T',
+      name: 'Mini UPS Marsriva KP6 MAX',
+      description: 'Mini UPS Marsriva KP6 MAX 20.000mAh de una duracion de mas de 8 horas en la mayoria de los casos',
+      stock: 4,
+      brand: 'Compurama',
+      image: 'https://imgur.com/a/JyLPfNr',
+      price: 69.6,
+      category: 'ups',
+      subCategory: null,
+      badge: null,
+      specs: ['Capacidad: 20.000mAh', 'Duración: >8h']
+    };
+    products.push(customMiniUps);
+    // ===============================
   } catch (err) {
     console.error("Critical load error:", err);
   } finally {
@@ -1700,3 +1716,4 @@ function handleTrustpilotSubmit(event) {
     showToast('❌ Error al conectar con Trustpilot.');
   }
 }
+$logic
