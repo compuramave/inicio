@@ -520,7 +520,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       description: 'Mini UPS Marsriva KP6 MAX 20.000mAh de una duracion de mas de 8 horas en la mayoria de los casos',
       stock: 4,
       brand: 'Compurama',
-      image: 'https://imgur.com/a/JyLPfNr',
+      image: 'catalogo/UPS/mini_ups_kp6_max.jpg',
       price: 69.6,
       category: 'ups',
       subCategory: null,
